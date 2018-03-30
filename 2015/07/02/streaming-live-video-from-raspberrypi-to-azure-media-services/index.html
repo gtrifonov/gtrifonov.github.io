@@ -1,0 +1,133 @@
+<html>
+<head/>
+<body>
+<div class="span8">
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/2015/07/02/streaming-live-video-from-raspberrypi-to-azure-media-services/" title="6:58 am" rel="bookmark"><time class="entry-date" datetime="2015-07-02T06:58:50+00:00" pubdate>2015/07/02</time></a><span class="byline"> <span class="sep"> by </span> <span class="author vcard"><a class="url fn n" href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Few weeks ago I bought raspberry PI 2 Model B to my elder kid to encourage him to program something  and start hacking. And as it often happens I also started to explore new toy and its capabilities. Since I am working in Azure Media services as developer, first project I actually started to implement myself is building security camera which will stream live video through Azure Media Services. I can look what&#8217;s happening around my house from work or from any place where I have access to internet. Looking into device specs and browsing similar projects I concluded that I should be able to archive my goals relatively fast and I started with hacking.</p>
+<h1>Hardware</h1>
+<ul>
+<li>Raspberry PI 2 Model B</li>
+<li>SD Card 16 GB</li>
+<li>Microsoft LifeCam 6000/ Raspberry PI Camera module</li>
+<li>USB wifi adapter if you don&#8217;t have wired Ethernet connection</li>
+<li>Keyboard (optional)</li>
+<li>Mouse(optional)</li>
+<li>Monitor(optional)</li>
+</ul>
+<p>You don&#8217;t actually need to plugin monitor, keyboard , mouse if you planning to access your PI from your computer via SSH.<br/>
+You can use either a usb camera or Raspberry PI Camera module. You should get better results with Raspberry PI Camera module since it has a dedicated bus with better throughput compare to usb connection.<br/>
+<a href="http://gtrifonov.com/wp-content/uploads/2015/07/RaspBerryPiCameraModule.jpg"><img class="alignnone  wp-image-821" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/RaspBerryPiCameraModule.jpg" alt="RaspberryPiCameraModule" width="608" height="456" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/RaspBerryPiCameraModule.jpg 1632w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/RaspBerryPiCameraModule-300x225.jpg 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/RaspBerryPiCameraModule-1024x768.jpg 1024w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/RaspBerryPiCameraModule-160x120.jpg 160w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/RaspBerryPiCameraModule-240x180.jpg 240w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/RaspBerryPiCameraModule-357x268.jpg 357w" sizes="(max-width: 608px) 100vw, 608px"/></a></p>
+<h1>Configuring required software</h1>
+<h2>Installing Ubuntu Mate</h2>
+<p>I decided to install <a href="https://ubuntu-mate.org/raspberry-pi/" onclick="__gaTracker('send', 'event', 'outbound-article', 'https://ubuntu-mate.org/raspberry-pi/', 'Ubuntu Mate');">Ubuntu Mate</a> instead of <a href="https://www.raspbian.org/" onclick="__gaTracker('send', 'event', 'outbound-article', 'https://www.raspbian.org/', 'Raspbian');">Raspbian</a> based on minimal requirements of Mate in order to have full desktop experience for my kids and potentially wider variety of GUI tools. Ubuntu Mate has image optimized for PI.Since  I used Ubuntu once a while,I decide to make it my default OS for Raspberry PI .</p>
+<p><strong>Minimum requirements from Ubuntu Mate web site:</strong></p>
+<ul>
+<li>Pentium III 750-megahertz</li>
+<li>512 megabytes (MB) of RAM</li>
+<li>8 gigabytes (GB) of available space on the hard disk</li>
+<li>Bootable DVD-ROM drive</li>
+<li>Keyboard and Mouse (or other pointing device)Video adapter and monitor with 1024 x 768 or higher resolution</li>
+<li>Sound card</li>
+<li>Speakers or headphones</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Raspberry PI Specs:</strong></p>
+<ul>
+<li>A 900MHz quad-core ARM Cortex-A7 CPU</li>
+<li>1GB RAM</li>
+<li>4 USB ports</li>
+<li>40 GPIO pins</li>
+<li>Full HDMI port</li>
+<li>Ethernet port</li>
+<li>Combined 3.5mm audio jack and composite video</li>
+<li>Camera interface (CSI)</li>
+<li>Display interface (DSI)</li>
+<li>Micro SD card slot</li>
+<li>VideoCore IV 3D graphics core</li>
+</ul>
+<p>&nbsp;</p>
+<p>To write iso image to sd card in Windows simply follow instructions from <a href="https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" onclick="__gaTracker('send', 'event', 'outbound-article', 'https://www.raspberrypi.org/documentation/installation/installing-images/windows.md', 'https://www.raspberrypi.org/documentation/installation/installing-images/windows.md');" title="https://www.raspberrypi.org/documentation/installation/installing-images/windows.md">https://www.raspberrypi.org/documentation/installation/installing-images/windows.md</a>.<br/>
+Once OS installed you need to configure SSH for remote access, Wifi and make sure that you able to browse internet.</p>
+<h2>Enabling RaspberryPi camera module in Ubuntu Mate</h2>
+<p>modifyfile /boot/firmware/config.txt<br/>
+<code>sudo nano /boot/firmware/config.txt</code><br/>
+Just add a line &#8220;start_x=1&#8221; at the bottom of the file config.txt, save it, and reboot the system.<br/>
+Try command &#8220;sudo raspistill -o test.jpg&#8221; to see if it is working</p>
+<h2>Installing FFMPEG</h2>
+<p>FFMPEG is powerful tool to work with video and able to encode and push encoded video to live stream channels.<br/>
+I found and follow instructions from <a href="http://www.jeffreythompson.org/blog/2014/11/13/installing-ffmpeg-for-raspberry-pi/" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://www.jeffreythompson.org/blog/2014/11/13/installing-ffmpeg-for-raspberry-pi/', 'Jeff Thomson blog post');">Jeff Thomson blog post</a>  which explains how to build ffmpeg for ARM processor and have hardware acceleration turned on.<br/>
+By defaults you will not have hardware acceleration if you will download precompiled binaries from ffmpeg site. So you need to get source code and compile it for Raspberry PI.<br/>
+Here is a summary of steps you need to perform:</p>
+<h3>Install build tools</h3>
+<p><code>sudo apt-get install makeinfo texinfo texi2html automake </code></p>
+<h3>Compile amd install H264 libraries:</h3>
+<p><code>cd /usr/src<br/>
+git clone git://git.videolan.org/x264<br/>
+cd x264<br/>
+./configure --host=arm-unknown-linux-gnueabi --enable-static --disable-opencl<br/>
+sudo make<br/>
+sudo make install </code></p>
+<h3>Compile amd install FFMPEG:</h3>
+<p><code>git clone git://source.ffmpeg.org/ffmpeg.git<br/>
+cd ffmpeg<br/>
+sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-libx264 --enable-nonfree<br/>
+sudo make<br/>
+sudo make install</code></p>
+<p>Testing ffmpeg and Camera module:</p>
+<p>Once you have all software</p>
+<p>&nbsp;</p>
+<h2>Configuring Live channel In Azure Media Services</h2>
+<p>Now you have to provision Azure media services  services and create live channel.</p>
+<ul>
+<li>Go to https://azure.microsoft.com and create account if you don&#8217;t have one. There are free trial offers available to play</li>
+<li>Provision Azure Media Services account
+<p><div id="attachment_701" style="width: 723px" class="wp-caption alignnone"><a href="http://gtrifonov.com/wp-content/uploads/2015/07/Provision_Azure_Media_Services.png"><img class=" wp-image-701" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/Provision_Azure_Media_Services.png" alt="Provision Azure Media Services Account" width="713" height="598" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/Provision_Azure_Media_Services.png 1279w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/Provision_Azure_Media_Services-300x252.png 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/Provision_Azure_Media_Services-1024x859.png 1024w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/Provision_Azure_Media_Services-143x120.png 143w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/Provision_Azure_Media_Services-215x180.png 215w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/Provision_Azure_Media_Services-319x268.png 319w" sizes="(max-width: 713px) 100vw, 713px"/></a><p class="wp-caption-text">Provision Azure Media Services Account</p></div></li>
+<li>Create Live Channel
+<p><div id="attachment_711" style="width: 737px" class="wp-caption alignnone"><a href="http://gtrifonov.com/wp-content/uploads/2015/07/CreateAzureMediaServicesChannelForRaspberryPI.png"><img class=" wp-image-711" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CreateAzureMediaServicesChannelForRaspberryPI.png" alt="Create Azure Media Services Channel For RaspberryPI" width="727" height="589" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CreateAzureMediaServicesChannelForRaspberryPI.png 1282w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CreateAzureMediaServicesChannelForRaspberryPI-300x243.png 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CreateAzureMediaServicesChannelForRaspberryPI-1024x829.png 1024w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CreateAzureMediaServicesChannelForRaspberryPI-148x120.png 148w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CreateAzureMediaServicesChannelForRaspberryPI-222x180.png 222w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CreateAzureMediaServicesChannelForRaspberryPI-331x268.png 331w" sizes="(max-width: 727px) 100vw, 727px"/></a><p class="wp-caption-text">Create Azure Media Services Channel For RaspberryPI</p></div></li>
+<li>Specify Channel name and description
+<p><div id="attachment_721" style="width: 656px" class="wp-caption alignnone"><a href="http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelProperties.png"><img class=" wp-image-721" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelProperties.png" alt="Specify Azure Media Services Channel Proerties" width="646" height="591" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelProperties.png 882w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelProperties-300x274.png 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelProperties-131x120.png 131w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelProperties-197x180.png 197w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelProperties-293x268.png 293w" sizes="(max-width: 646px) 100vw, 646px"/></a><p class="wp-caption-text">Specify Azure Media Services Channel Properties</p></div></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Select RTMP ingest protocol<br/>
+<a href="http://gtrifonov.com/wp-content/uploads/2015/07/LiveChannelProtocol.png"><img class="alignnone  wp-image-731" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/LiveChannelProtocol.png" alt="Azure Media Services Live Channel Protocol" width="557" height="495" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/LiveChannelProtocol.png 822w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/LiveChannelProtocol-300x266.png 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/LiveChannelProtocol-135x120.png 135w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/LiveChannelProtocol-203x180.png 203w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/LiveChannelProtocol-302x268.png 302w" sizes="(max-width: 557px) 100vw, 557px"/></a></li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Specify ingest restrictions
+<div id="attachment_741" style="width: 560px" class="wp-caption alignnone"><a href="http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelIngestRestrictions.png"><img class=" wp-image-741" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelIngestRestrictions.png" alt="Live channel ingest restrictions" width="550" height="506" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelIngestRestrictions.png 830w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelIngestRestrictions-300x276.png 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelIngestRestrictions-130x120.png 130w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelIngestRestrictions-196x180.png 196w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/AzureMediaServicesChannelIngestRestrictions-291x268.png 291w" sizes="(max-width: 550px) 100vw, 550px"/></a><p class="wp-caption-text">Live channel ingest restrictions</p></div>
+<p><div id="attachment_751" style="width: 567px" class="wp-caption alignnone"><a href="http://gtrifonov.com/wp-content/uploads/2015/07/CopyAzureMediaServicesIngestUrls.png"><img class=" wp-image-751" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CopyAzureMediaServicesIngestUrls.png" alt="Copy Live Stream Ingest Urls " width="557" height="414" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CopyAzureMediaServicesIngestUrls.png 1036w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CopyAzureMediaServicesIngestUrls-300x223.png 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CopyAzureMediaServicesIngestUrls-1024x761.png 1024w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CopyAzureMediaServicesIngestUrls-160x120.png 160w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CopyAzureMediaServicesIngestUrls-242x180.png 242w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/CopyAzureMediaServicesIngestUrls-360x268.png 360w" sizes="(max-width: 557px) 100vw, 557px"/></a><p class="wp-caption-text">Copy Live Stream Ingest Urls</p></div></li>
+</ul>
+<h2>Pushing live stream from Raspberry Pi to Azure Media Services live channel</h2>
+<p>At this point you have all your hardware,software configured and prepared, live channel is ready to get a live stream from your Raspberry PI device.<br/>
+It is time to start streaming. I created a simple bash script which using ffmpeg to stream from camera.</p>
+<p><code><br/>
+nano ~/azure_ffmpeg</code></p>
+<p>#!/bin/bash<br/>
+modprobe bcm2835-v4l2<br/>
+INGESTURI=&#8221;Paste live channel ingest url here from Azure Media Services&#8221;<br/>
+while :<br/>
+do<br/>
+ffmpeg -framerate 30 -r 30 -s 640&#215;480 -i /dev/video0 -vcodec libx264 -preset ultrafast -acodec libfaac -ab 48k -b:v 500k -maxrate 500k -bufsize 500k -r 30 -g 60 -keyint_min 60 -sc_threshold 0 -f flv $INGESTURI<br/>
+sleep 10<br/>
+done</p>
+<p>chmod u+x ~/azure_ffmpeg<br/>
+sudo ~/azure_ffmpeg</p>
+<p>We created a script ~/azure_ffmpeg. modprobe bcm2835-v4l2 maps PI camera module as /dev/video0 device. if you are using usb camera then you don&#8217;t need this line.<br/>
+Then we are launching ffmpeg and telling it to stream video from /dev/video0 device to our channel with 500k bit rate using ultrafast preset of libx264 codec. We are also instructing to use audio codec since as of now Azure Media Services requires to have both video and audio to be streamed to channel.<br/>
+Once script is created and saved chmod command is used to grant script execution permissions. Finally sudo ~/azure_ffmpeg launching stream processing.</p>
+<p>While script is running you can preview it and publish through portal. Publisher url is url you can share with world to watch your Raspberry PI live stream.</p>
+<div id="attachment_771" style="width: 606px" class="wp-caption alignnone"><a href="http://gtrifonov.com/wp-content/uploads/2015/07/PreviewAzureMediaServicesLiveChannel.png"><img class=" wp-image-771" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewAzureMediaServicesLiveChannel.png" alt="Preview Azure Media Services live stream " width="596" height="549" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewAzureMediaServicesLiveChannel.png 1108w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewAzureMediaServicesLiveChannel-300x276.png 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewAzureMediaServicesLiveChannel-1024x944.png 1024w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewAzureMediaServicesLiveChannel-130x120.png 130w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewAzureMediaServicesLiveChannel-195x180.png 195w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewAzureMediaServicesLiveChannel-291x268.png 291w" sizes="(max-width: 596px) 100vw, 596px"/></a><p class="wp-caption-text">Preview Azure Media Services live stream</p></div>
+<p>&nbsp;</p>
+<p><a href="http://gtrifonov.com/wp-content/uploads/2015/07/PreviewLiveChannelWithGeorgeInOffice.png"><img class="alignnone  wp-image-781" src="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewLiveChannelWithGeorgeInOffice.png" alt="PreviewLiveChannelWithGeorgeInOffice" width="615" height="473" srcset="https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewLiveChannelWithGeorgeInOffice.png 1364w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewLiveChannelWithGeorgeInOffice-300x231.png 300w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewLiveChannelWithGeorgeInOffice-1024x788.png 1024w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewLiveChannelWithGeorgeInOffice-156x120.png 156w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewLiveChannelWithGeorgeInOffice-234x180.png 234w, https://web.archive.org/web/20170806081838im_/http://gtrifonov.com/wp-content/uploads/2015/07/PreviewLiveChannelWithGeorgeInOffice-348x268.png 348w" sizes="(max-width: 615px) 100vw, 615px"/></a></p>
+<h2>What next</h2>
+<p>In this article i showed you how you can use portal to configure and start live channel. My next steps will be create scripts, so i can manage live channels though raspberry PI itself. So stay tuned.</p>
+<div style="float: right; margin-left: 10px;"><a href="http://twitter.com/share?url=http://gtrifonov.com/2015/07/02/streaming-live-video-from-raspberrypi-to-azure-media-services/&amp;via=&amp;text=Streaming live video from RaspberryPI to Azure Media Services&amp;related=:&amp;lang=en&amp;count=horizontal" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://twitter.com/share?url=http://gtrifonov.com/2015/07/02/streaming-live-video-from-raspberrypi-to-azure-media-services/&amp;via=&amp;text=Streaming live video from RaspberryPI to Azure Media Services&amp;related=:&amp;lang=en&amp;count=horizontal', 'Tweet');" class="twitter-share-button">Tweet</a><script type="text/javascript" src="https://web.archive.org/web/20170806081838js_/http://platform.twitter.com/widgets.js"></script></div>            <p>Tags: <a href="http://gtrifonov.com/tag/azure-media-services/" rel="tag">azure media services</a>, <a href="http://gtrifonov.com/tag/raspberrypi/" rel="tag">raspberryPi</a></p><hr/>
+
+
+
+        </div>
+
+    </div>
+</body>
+</html>
