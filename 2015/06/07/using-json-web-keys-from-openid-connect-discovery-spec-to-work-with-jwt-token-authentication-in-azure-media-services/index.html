@@ -1,0 +1,28 @@
+---
+layout: post
+title: Using Json Web Keys from OpenID Connect discovery spec to work with JWT token authentication in Azure Media Services
+---
+
+<p>In my recent blogs post <a href="http://gtrifonov.com/2015/01/24/mvc-owin-azure-media-services-ad-integration/">&#8220;Integrate Azure Media Services OWIN MVC based app with Azure Active Directory …&#8221;</a> I described how you can utilize JWT token issued by Azure Active directory and provide group based permissions to watch videos hosted in Azure Media Services.<br/>
+Sample from blog post was mentioning that Azure Active Directory have signing certificate rotation logic and developers need to detect this rotation and update public keys stored in Media Services in order to have JWT token signature verification to be working.</p>
+<p>In latest <a href="https://www.nuget.org/packages/windowsazure.mediaservices/3.3.0" onclick="__gaTracker('send', 'event', 'outbound-article', 'https://www.nuget.org/packages/windowsazure.mediaservices/3.3.0', '3.3.0.0 release');">3.3.0.0 release</a> Azure Media Services team added functionality to support OpenId Connect discovery spec and avoid problem with keys expiration due to rolling logic on identity provider side.<br/>
+If you are using identity provider which is exposing OpenID connect discovery document (and majority of providers such as Azure Active Directory, Google, Salesforce does), you can instruct Azure Media services  obtain signing keys for validation of JWT token from OpenID connect discovery spec. </p>
+<h2>OpenID Connect Discovery Spec and Json Web Keys (JWK)</h2>
+<p>OpenID Connect Discovery Spec defines how clients dynamically discover information about OpenID provider. It is JSON document published by provider and contains metadata information about how user system can interact with identity provider.</p>
+<p>Here you can find example of discovery doc exposed by Azure Active Directory.<br/>
+<script src="https://gist.github.com/gtrifonov/a054fe1bc895576eadcf.js"></script></p>
+<p>As you can see document has pointer to a resource where you can obtain JSON Web Keys (https://tools.ietf.org/html/draft-ietf-jose-json-web-key-41.).<br/>
+<code>"jwks_uri":"https://login.windows.net/common/discovery/keys",</code></p>
+<p>A JSON Web Key (JWK) document has collection of signing public keys used by Identity provider which you can use to verify JWT token signature.</p>
+<p>Example of Azure Active Directory signing keys in Json Web Keys fromat:<br/>
+https://login.windows.net/common/.well-known/openid-configuration</p>
+<p><script src="https://gist.github.com/gtrifonov/4e10bd2fcda51f86ee99.js"></script></p>
+<p>Example of Google Json Web Keys.https://accounts.google.com/.well-known/openid-configuration<br/>
+<script src="https://gist.github.com/gtrifonov/d0081768520805ac35e9.js"></script></p>
+<h2>Using OpenId Connect Discovery Spec together with Azure Media Services JWT token verification</h2>
+<p>Since Open ID Connect spec has all information regarding signing keys used to sign JWT token you don&#8217;t need anymore persist these signing keys in Azure Media Services. All you need to do is instruct Azure Media key delivery service is to use defined openid connect specification during JWT token validation.</p>
+<p>Here is a modified code snippet from Azure AD integration example to create Authorization policy and instruct to use OpenId Connect spec for token validation.</p>
+<p><script src="https://gist.github.com/gtrifonov/094fb77e905133c8589c.js"></script></p>
+<p>You can see example changes in <a href="https://github.com/AzureMediaServicesSamples/Key-delivery-with-AAD-integration/commit/826f6732bf6e4d3613040c51cafccca6fd1963b9" onclick="__gaTracker('send', 'event', 'outbound-article', 'https://github.com/AzureMediaServicesSamples/Key-delivery-with-AAD-integration/commit/826f6732bf6e4d3613040c51cafccca6fd1963b9', 'following commit ');">following commit </a></p>
+<div style="float: right; margin-left: 10px;"><a href="http://twitter.com/share?url=http://gtrifonov.com/2015/06/07/using-json-web-keys-from-openid-connect-discovery-spec-to-work-with-jwt-token-authentication-in-azure-media-services/&amp;via=&amp;text=Using Json Web Keys from OpenID Connect discovery spec to work with JWT token authentication in Azure Media Services&amp;related=:&amp;lang=en&amp;count=horizontal" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://twitter.com/share?url=http://gtrifonov.com/2015/06/07/using-json-web-keys-from-openid-connect-discovery-spec-to-work-with-jwt-token-authentication-in-azure-media-services/&amp;via=&amp;text=Using Json Web Keys from OpenID Connect discovery spec to work with JWT token authentication in Azure Media Services&amp;related=:&amp;lang=en&amp;count=horizontal', 'Tweet');" class="twitter-share-button">Tweet</a><script type="text/javascript" src="/http://platform.twitter.com/widgets.js"></script></div>            <p>Tags: <a href="http://gtrifonov.com/tag/azure-media-services/" rel="tag">azure media services</a>, <a href="http://gtrifonov.com/tag/jwk/" rel="tag">JWK</a>, <a href="http://gtrifonov.com/tag/jwt/" rel="tag">JWT</a></p><hr/>
+ 

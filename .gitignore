@@ -1,5 +1,4 @@
-*~
-.DS_Store
-_drafts/
-_site/
-build/
+
+_site
+.sass-cache
+.jekyll-metadata
