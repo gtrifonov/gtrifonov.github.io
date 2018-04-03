@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<body>
+   <div class="container">
+      <header class="post-title">
+        <h1>Integrate Azure Media Services OWIN MVC based app with Azure Active Directory and restrict content key delivery based on JWT claims</h1>
+      </header>
+        <div class="row content">
+<div class="span8">
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/2015/01/24/mvc-owin-azure-media-services-ad-integration/" title="12:34 am" rel="bookmark"><time class="entry-date" datetime="2015-01-24T00:34:04+00:00" pubdate>2015/01/24</time></a><span class="byline"> <span class="sep"> by </span> <span class="author vcard"><a class="url fn n" href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p><em><strong>Updated on 06/08/2015: </strong>Code sample has been updated to use Json web Keys . See blog post <a href="http://gtrifonov.com/2015/06/07/using-json-web-keys-from-openid-connect-discovery-spec-to-work-with-jwt-token-authentication-in-azure-media-services/">Using Json Web Keys from OpenID Connect discovery spec to work with JWT token authentication in Azure Media Services</a> for details</em></p>
+<p>
+<em><strong>Updated on 04/22/2015:</strong>  Code samples mentioned here has been moved to official <a href="https://github.com/AzureMediaServicesSamples/Key-delivery-with-AAD-integration" onclick="__gaTracker('send', 'event', 'outbound-article', 'https://github.com/AzureMediaServicesSamples/Key-delivery-with-AAD-integration', 'Azure Media Services sample github repo');">Azure Media Services sample github repo</a>. Usage of graph API JWT token has been changed to display group membership only. Sample application has been updated to use authentication JWT token obtained from AD for sample app,instead of passing Graph API JWT token to Azure Media Key Delivery Service. </em>
+</p>
+<p>
+In this article I want to demo how to build an OWIN MVC application that uses Media Services to store a collection of video clips, dynamically encrypt these videos with AES, and deliver encrypted content to clients.</p>
+<p>The MVC application integrates with Azure Active Directory user groups and leverages Azure AD single sign in. The sample demonstrates how to enable admin users to restrict access to videos based on AD user group membership.</p>
+<p>The MVC application also uses Media Services Key Delivery Service to deliver content keys to clients that want to play the encrypted content. To decide whether or not the client is authorized to get the key, the service evaluates the authorization policies that is configured for the key. In the sample shown in this article, I restrict access to content keys based on JWT claims. Read more about JWT token authentication in my last post <span class="apple-converted-space"><a href="http://gtrifonov.azurewebsites.net/2015/01/03/jwt-token-authentication-in-azure-media-services-and-dynamic-encryption/" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://gtrifonov.azurewebsites.net/2015/01/03/jwt-token-authentication-in-azure-media-services-and-dynamic-encryption/', 'JWT token Authentication in Azure Media Services and Dynamic Encryption');" title="JWT token Authentication  in Azure Media  Services and Dynamic  Encryption">JWT token Authentication in Azure Media Services and Dynamic Encryption</a></span>.</p>
+<p>Code mentioned in this post shipped as part of Azure Media Service samples and located at https://github.com/AzureMediaServicesSamples/Key-delivery-with-AAD-integration</p>
+<h3>Quick summary of steps described in this post:</h3>
+<ol>
+<li>Provision Azure Media Service account and encode few video files to be used in a video portal mvc app</li>
+<li>Create a few user accounts and groups in your Azure Active Directory tenant</li>
+<li>Register the sample with your Azure Active Directory tenant</li>
+<li>Create a OWIN app to display a list of video streams and configure their authentication policies</li>
+</ol>
+<h3>Provision Azure Media Service account and encode few videos to be ready for prime time</h3>
+<p>Use the Portal to upload an asset. See the steps described in the <a href="http://azure.microsoft.com/en-us/documentation/articles/media-services-manage-content/" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://azure.microsoft.com/en-us/documentation/articles/media-services-manage-content/', 'How to: Upload content section');">How to: Upload content section</a>.</p>
+<h3>Create a few user accounts and groups in your Azure Active Directory tenant</h3>
+<ol class="task-list">
+<li>Provision new AD tenant or use existing one<a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/CreateADTenant.png" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/CreateADTenant.png', '');"><img class="alignnone wp-image-364 size-large" src="https://web.archive.org/web/20170629230202im_/http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/CreateADTenant-1024x508.png" alt="Create Azure Active Directory tenant" width="770" height="382" srcset="https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADTenant-1024x508.png 1024w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADTenant-300x149.png 300w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADTenant-160x79.png 160w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADTenant-260x129.png 260w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADTenant-360x178.png 360w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADTenant.png 1170w" sizes="(max-width: 770px) 100vw, 770px"/></a></li>
+<li>Create Admin Group and save aside value ObjectID of this group<a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/CreateADUserGroups.png" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/CreateADUserGroups.png', '');"><img class="wp-image-365 size-large" src="https://web.archive.org/web/20170629230202im_/http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/CreateADUserGroups-1024x380.png" alt="Create Azure AD user Groups" width="770" height="286" srcset="https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADUserGroups-1024x380.png 1024w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADUserGroups-300x111.png 300w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADUserGroups-160x59.png 160w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADUserGroups-260x97.png 260w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADUserGroups-360x134.png 360w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/CreateADUserGroups.png 1188w" sizes="(max-width: 770px) 100vw, 770px"/></a></li>
+<li>Create one or more additional groups</li>
+<li>Assign one of a user to be a member of admin group. This user will be able to configure authorization policies within MediaLibraryWebApp</li>
+<li>Assign other users between other groups</li>
+</ol>
+<h3>Register the sample with your Azure Active Directory tenant</h3>
+<ol class="task-list">
+<li>Sign in to the <a href="https://manage.windowsazure.com/" onclick="__gaTracker('send', 'event', 'outbound-article', 'https://manage.windowsazure.com/', 'Azure management portal');">Azure management portal</a>.</li>
+<li>Click on Active Directory in the left hand nav.</li>
+<li>Click the directory tenant where you wish to register the sample application.</li>
+<li>Click the Applications tab.</li>
+<li>In the drawer, click Add.</li>
+<li>Click &#8220;Add an application my organization is developing&#8221;.</li>
+<li>Enter a friendly name for the application, for example &#8220;MediaLibraryWebApp&#8221;, select &#8220;Web Application and/or Web API&#8221;, and click next.</li>
+<li>For the sign-on URL, enter the base URL for the sample, which is by default <code>https://localhost:44322/</code>. NOTE: It is important, due to the way Azure AD matches URLs, to ensure there is a trailing slash on the end of this URL. If you don&#8217;t include the trailing slash, you will receive an error when the application attempts to redeem an authorization code.</li>
+<li>For the App ID URI, enter <code>https://&lt;your_tenant_name&gt;/MediaLibraryWebApp</code>, replacing <code>&lt;your_tenant_name&gt;</code> with the name of your Azure AD tenant. Click OK to complete the registration.</li>
+<li>While still in the Azure portal, click the Configure tab of your application.</li>
+<li>Find the Client ID value and copy it aside, you will need this later when configuring your application.</li>
+<li>Create a new key for the application. Save the configuration so you can view the key value. Save this aside for when you configure the project in Visual Studio.</li>
+<li>Download &#8216;MediaLibraryWebApp&#8217; application manifest from Azure portal</li>
+<li>Find property <code>groupMembershipClaims</code> and change it value to <code>All</code>. <code>"groupMembershipClaims": "All",</code></li>
+<li>Upload application manifest back to Azure portal</li>
+<li>In section &#8216;Permission to other applications &#8216; select Windows Azure Active Directory Application permissions and check all checkboxes.</li>
+</ol>
+<div id="attachment_368" style="width: 780px" class="wp-caption alignnone"><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/ConfigureADWebApplication1.png" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/ConfigureADWebApplication1.png', '');"><img class="wp-image-368 size-large" src="https://web.archive.org/web/20170629230202im_/http://gtrifonov.azurewebsites.net/wp-content/uploads/2015/01/ConfigureADWebApplication1-1024x938.png" alt="Configure AD Web Application" width="770" height="705" srcset="https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/ConfigureADWebApplication1-1024x938.png 1024w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/ConfigureADWebApplication1-300x275.png 300w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/ConfigureADWebApplication1-131x120.png 131w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/ConfigureADWebApplication1-197x180.png 197w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/ConfigureADWebApplication1-293x268.png 293w, https://web.archive.org/web/20170629230202im_/http://gtrifonov.com/wp-content/uploads/2015/01/ConfigureADWebApplication1.png 1166w" sizes="(max-width: 770px) 100vw, 770px"/></a><p class="wp-caption-text">Configure AD Web Application</p></div>
+<h2>Create a OWIN MVC app to display a list of streamable media files</h2>
+<h3>Creating Empty ASP.NET  MVC application from template</h3>
+<ol class="task-list">
+<li>In Visual Studio 2013, create a new ASP.Net MVC web application with Authentication set to No Authentication.</li>
+<li>
+<h3>Add OWIN NuGet Packages</h3>
+<p>Next, add the required NuGet packages. From the <strong>Tools</strong> menu, select <strong>Library Package Manager</strong>, then select<strong>Package Manager Console</strong>. In the Package Manager Console window, type the following command:</p>
+<p><code>install-package Microsoft.Owin.Host.SystemWeb –Pre</code></p>
+<p><img src="https://web.archive.org/web/20170629230202im_/http://i1.asp.net/media/4407972/owin04.PNG?cdn_id=2015-01-19-002" alt="" data-original="//i1.asp.net/media/4407972/owin04.PNG?cdn_id=2015-01-19-002"/></li>
+<li>
+<h3>Add AD Client SDK and Media Services .NET,SDK</h3>
+<p>Through Packager Manager Console execute following commands:<br/>
+<code><br/>
+install-package System.IdentityModel.Tokens.Jwt<br/>
+install-package windowsazure.mediaservices<br/>
+install-package Microsoft.IdentityModel.Clients.ActiveDirectory<br/>
+</code></li>
+<li>
+<h3>Add a Startup Class</h3>
+<p>Next, add an OWIN startup class. In Solution Explorer, right-click the project and select <strong>Add</strong>, then select <strong>New Item</strong>. In the <strong>Add New Item</strong> dialog, select <strong>Owin Startup class</strong>. For more info on configuring the startup class, see <a href="http://www.asp.net/aspnet/overview/owin-and-katana/owin-startup-class-detection" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://www.asp.net/aspnet/overview/owin-and-katana/owin-startup-class-detection', 'OWIN Startup Class Detection');">OWIN Startup Class Detection</a>.</p>
+<p><img src="https://web.archive.org/web/20170629230202im_/http://i2.asp.net/media/4407966/owin03.PNG?cdn_id=2015-01-19-002" alt="" data-original="//i2.asp.net/media/4407966/owin03.PNG?cdn_id=2015-01-19-002"/></li>
+</ol>
+<h3>Implement Single Sign-On Authentication and store JWT issued by Azure AD</h3>
+<h4>Changed created startup.cs class to be partial</h4>
+<p><script src="https://gist.github.com/gtrifonov/9f2e818545f1a4974cd8.js"></script></p>
+<h4>Create partial class which will implement AD OpenID authentication and will save Azure Media Services credentials in Identity claims</h4>
+<p><script src="https://gist.github.com/gtrifonov/316f516f48c101e6fd35.js"></script></p>
+<h4>Create AccountController to handle sign in and sign out</h4>
+<p><script src="https://gist.github.com/gtrifonov/66c79d2525dfe85c0871.js"></script></p>
+<h3>Use Active Directory .NET SDK to access AD Graph API</h3>
+<p>In our portal i wanted to have user profile page which will display user Azure group membership and all claims from JWT token. These claims can be used to configure Azure Media services Key Delivery authentication policies. In our example i will use claim &#8216;groups&#8217; to restrict video streaming to users of selected AD group.<script src="https://gist.github.com/gtrifonov/f8bd1bfbca970e86e23d.js"></script></p>
+<h3>Display list of streamable assets and grant permissions to AD user groups to view AMS hosted video streams</h3>
+<p>In media portal page <code>https://github.com/gtrifonov/azure-media-services-samples/blob/master/KDWithADMVC/MediaLibraryWebApp/Controllers/MediaLibraryController.cs</code><br/>
+I need to have a list of video streams which are dynamically decrypted by media player. As a first step in streaming process video player tries to obtain content key from key delivery service to decrypt stream. Key request need to be sent with JWT or SWT token specified in HTTP Authorization header. Our application pass though JWT token generated by AD to Key delivery service. Once key Delivery service receives content key requests, it validates if JWT token contains same claims as specified in key delivery auth policies. Portal admin user can configure key delivery authentication policies based on user AD JWT token claims.<br/>
+As Portal admin user i need to specify which AD user groups will have access to video clips. I need to create auth policies specifying that &#8216;groups&#8217; claim is required claim and have corresponding value from Azure AD groups. In a sample user profile page displays all AD groups ids values which  can used.</p>
+<h4>Retrieving list of media assets</h4>
+<p>Following code displays list of video clips which are streamable<br/>
+<script src="https://gist.github.com/gtrifonov/18b11ec428244ae13314.js"></script></p>
+<h4>Select a video and configure authentication policies based on AD user group membership</h4>
+<p>Code below is using AD JWT token and configure JWT token content key authentication policies in key delivery. Content key request will be served only when it contains JWT token in a header signed by AD active directory. JWT token should have claim provided by admin user. In our example it is AD group id.<script src="https://gist.github.com/gtrifonov/7263d4654713d9d4a85a.js"></script></p>
+<div style="float: right; margin-left: 10px;"><a href="http://twitter.com/share?url=http://gtrifonov.com/2015/01/24/mvc-owin-azure-media-services-ad-integration/&amp;via=&amp;text=Integrate Azure Media Services OWIN MVC based app with Azure Active Directory and restrict content key delivery based on JWT claims&amp;related=:&amp;lang=en&amp;count=horizontal" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://twitter.com/share?url=http://gtrifonov.com/2015/01/24/mvc-owin-azure-media-services-ad-integration/&amp;via=&amp;text=Integrate Azure Media Services OWIN MVC based app with Azure Active Directory and restrict content key delivery based on JWT claims&amp;related=:&amp;lang=en&amp;count=horizontal', 'Tweet');" class="twitter-share-button">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div>            <p>Tags: <a href="http://gtrifonov.com/tag/active-directory/" rel="tag">Active Directory</a>, <a href="http://gtrifonov.com/tag/auth/" rel="tag">Auth</a>, <a href="http://gtrifonov.com/tag/azure-media-services/" rel="tag">azure media services</a>, <a href="http://gtrifonov.com/tag/jwt/" rel="tag">JWT</a>, <a href="http://gtrifonov.com/tag/key-delivery/" rel="tag">Key Delivery</a></p><hr/>
+ 
+
+  </body>
+</html>

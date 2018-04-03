@@ -1,1 +1,3 @@
 theme: jekyll-theme-slate
+destination: ./_site
+exclude: ["CNAME","MIT-LICENSE", "README.md"]
