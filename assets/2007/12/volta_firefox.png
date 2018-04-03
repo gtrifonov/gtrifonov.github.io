@@ -1,0 +1,44 @@
+<!--
+	top.location="http://searchmagnified.com/?dn=devmobile.net&fp=fqNYx28cu5BpI0HR4KbjBnD1k6E0oOJCt%2FjO5R5GlTRNb7PBFcpGWnG8okHp4uDqyoOrP3QjSoqprsEcLMb8WA%3D%3D&prvtof=vPtkHwfHZhlOXOWmVWuKbKYP1N1yGgf3Ypt2wj2jnjM%3D&poru=evwqT36G9bUW2fiFb9VDnDZsET2A8bKoHWncNBLWYmUQzUbsjm5X2B%2BNq94eTLazs9XEJY1TsUhxd4Kg6kqraBM0p%2FA2POBTYhhy%2B%2FmgK6U%3D&cifr=1&";
+	/*
+-->
+<script type="text/javascript">
+	<!--
+	dimensionUpdated = 0;
+	function applyFrameKiller()
+	{
+		if(window.top != self)
+		{
+			cHeight = 0;
+			if( typeof( window.innerHeight ) != 'undefined' ) {
+			//Non-IE
+			cHeight = window.innerHeight;
+			dimensionUpdated = 1;
+			} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight )  ) {
+			//IE 6+ in 'standards compliant mode'
+			cHeight = document.documentElement.clientHeight;
+			dimensionUpdated = 1;
+			} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+			//IE 4 compatible
+			cHeight = document.body.clientHeight;
+			dimensionUpdated = 1;
+			}
+			if( cHeight <= 250 && dimensionUpdated == 1)
+			{
+				window.top.location = "http://searchmagnified.com/?dn=devmobile.net&fp=fqNYx28cu5BpI0HR4KbjBnD1k6E0oOJCt%2FjO5R5GlTRNb7PBFcpGWnG8okHp4uDqyoOrP3QjSoqprsEcLMb8WA%3D%3D&prvtof=4vejWJLaWpmNWcuP1oWIC1JXKWdBZZ0ZiedDAAoaKcY%3D&poru=VVs4rJ48R340fhgbMLo0iUEriyt71xFMa7QDkfR7CvEGH30NW%2BXVpydII%2BRuEjFEuGiAoxGyoYdSIAySshcpMKCTbaVNp3%2B3eSL2sT8x3Ys%3D&cifr=1&";
+			}
+		}
+	}
+
+	applyFrameKiller();
+	// -->
+</script><frameset rows="100%,*" frameborder="no" border="0" framespacing="0">
+	<frame src="http://searchmagnified.com/?dn=devmobile.net&fp=fqNYx28cu5BpI0HR4KbjBnD1k6E0oOJCt%2FjO5R5GlTRNb7PBFcpGWnG8okHp4uDqyoOrP3QjSoqprsEcLMb8WA%3D%3D&prvtof=IBhYUGx6CszyH2UZ1DuFCfTI1NYCIoQnnXxjf%2Fcv7F0%3D&poru=RnJVbI9dxzbJ7NsvX4JizgkUYNqsr%2F7sHMNgmBgoQAZp%2FKSXsxTRLq8cPOPuz9IfsaXMZyWCnMRJz2ZFQn2Ng8Wu8Q0lumM7fIHmr1ApkuU%3D&">
+</frameset>
+<noframes>
+	<body bgcolor="#ffffff" text="#000000">
+	<a href="http://searchmagnified.com/?dn=devmobile.net&fp=fqNYx28cu5BpI0HR4KbjBnD1k6E0oOJCt%2FjO5R5GlTRNb7PBFcpGWnG8okHp4uDqyoOrP3QjSoqprsEcLMb8WA%3D%3D&prvtof=wmeSjPKo24kFnnXP8L5ieotGlzKSU8%2FMP2WDGa49ixg%3D&poru=0uLeF8LFvXJZQ2iLT0glNjH5OPiVtgUJ6hcqh%2FIwArbvlTTTHCx4iayzrmp8fZf5b7V1o6OWMqb8%2FWuuWMbE78mPQZsQy2zH%2Fs3qyid84TU%3D&">Click here to proceed</a>.
+	</body>
+</noframes><!--
+*/
+-->
