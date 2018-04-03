@@ -2,3 +2,5 @@
 theme: minima
 exclude: ["CNAME", "MIT-LICENSE", "README.md"]
 permalink: /:year/:month/:day/:slug/index.html
+header_pages:
+  - about.md
