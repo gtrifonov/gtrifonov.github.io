@@ -1,0 +1,31 @@
+---
+layout: post
+title: "When you overgrow your RaspberryPi sd card - How to clone SD card  and re-size root partition"
+slug: when-you-overgrow-your-raspberrypi-sd-card-how-to-clone-sd-card-and-re-size-root-partition
+---
+               
+   
+<p>After Raspberry PI arrived and you spent few weeks experimenting you start realizing that you run out of space in your sd card. Especially it is true when you use some sd card which was laying around and you was happy to save 10$. Now you constantly getting out of space messages trying to install some new package.</p>
+<h2>How to move RaspberryPi to bigger SD card ?</h2>
+<h3>Cloning SD card</h3>
+<ol>
+<li>Shut down Pi ansd remove original  sd card</li>
+<li>Download and install Win32DiskImager from http://sourceforge.net/projects/win32diskimager/</li>
+<li>Insert existing original  SD card to card reader</li>
+<li>Run Win32Disk Manager and specify from which disk to clone and to what image file to save. Click &#8220;Read&#8221;<br/>
+<a href="/assets/2015/06/win32DiskManager.png"><img class="alignnone size-full wp-image-551" src="/assets/2015/06/win32DiskManager.png" alt="win32DiskManager" width="421" height="213" srcset="/assets/2015/06/win32DiskManager.png 421w, /assets/2015/06/win32DiskManager-300x152.png 300w, /assets/2015/06/win32DiskManager-160x81.png 160w, /assets/2015/06/win32DiskManager-260x132.png 260w, /assets/2015/06/win32DiskManager-360x182.png 360w" sizes="(max-width: 421px) 100vw, 421px"/></a></li>
+<li>Remove original SD card to card reader</li>
+<li>Insert new SD card to card reader and click &#8220;Write&#8221;.Confirm that to you want to continue.<br/>
+<a href="/assets/2015/06/win32DiskManagerWrite1.png"><img class="alignnone size-full wp-image-571" src="/assets/2015/06/win32DiskManagerWrite1.png" alt="win32DiskManagerWrite" width="434" height="269" srcset="/assets/2015/06/win32DiskManagerWrite1.png 434w, /assets/2015/06/win32DiskManagerWrite1-300x186.png 300w, /assets/2015/06/win32DiskManagerWrite1-160x99.png 160w, /assets/2015/06/win32DiskManagerWrite1-260x161.png 260w, /assets/2015/06/win32DiskManagerWrite1-360x223.png 360w" sizes="(max-width: 434px) 100vw, 434px"/></a></li>
+</ol>
+<h3>Resizing partition</h3>
+<p>To re-size partitions i followed steps from http://raspberrypi.stackexchange.com/questions/499/how-can-i-resize-my-root-partition.</p>
+<ol>
+<li>Type <code>sudo fdisk /dev/mmcblk0</code> and you will see list of partions</li>
+<li>Delete root partition &#8211; type <code>d</code> to delete a partition. Enter partition number 2</li>
+<li>Create new partition &#8211; type <code>n</code> to create a partition. Enter <code>p</code> to define it as primary .Specify partition number: 2</li>
+<li>You will be prompted to specify start number of partition. select default value which should be equal to value from original list printed in first step</li>
+<li>Type <code>w</code> to save changes</li>
+<li>Reboot <code>sudo reboot</code></li>
+<li>Resize partition <code>sudo resize2fs /dev/mmcblk0p2</code></li>
+</ol>
