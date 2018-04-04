@@ -11,7 +11,7 @@ plugins:
   - "jekyll-sitemap"
   - "jekyll-github-metadata"
 disqus:
-  shortname: "GeorgeTrifonov"
+  shortname: "gtrifonov"
 twitter_username: geotrif
 github_username: gtrifonov
 linkedin_username: gtrifonov
