@@ -1,0 +1,130 @@
+---
+layout: post
+title: "Windows Azure Media Services .NET SDK 3.0.0.2 release "
+slug: 2014-02-07-windows-azure-media-services-.net-sdk-3.0.0.2-release
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Today Microsoft released version 3.0.0.2&#xA0; of Windows Azure Media Services .NET SDK which is hosted in nuget.org&#xA0; <a href="http://bit.ly/1gUB34k</a>.</p>
+<p>3.0.0.2 is a minor release addressing few bug fixes,code refactoring within sdk code base and splitting scenario e2e tests from unit tests into different solutions. </p>
+<p>I want to highlight few changes which recently have been made in 3.0.0.2 and&#xA0; 3.0.0.1&#xA0; versions which might&#xA0; be beneficial for you application performance.</p>
+<p>&#xA0;</p>
+<h3>Using MediaServicesCredentials and how to reuse ACS token to avoid redundant calls to ACS</h3>
+<p>CloudMediaContext&#xA0; is a first type which you use to talk with REST api. It encapsulate logic to get access token from Azure ACS service&#xA0; and provides you easy entry point&#xA0; to available entity collections to work with.</p>
+<p>Prior to 3.0.0.0 every time you create instance of CloudMediaContext&#xA0; WAMS .NET SDK was sending to REST API 2 requests:</p>
+<ul>
+<li>request to Windows Azure Access Control Service REST API&#xA0; to get&#xA0; authentication token  </li>
+<li>request to Azure Media Services REST API to detect which api endpoint you will be talking going forward based on your account region</li>
+</ul>
+<p>To optimize performance in multithreaded, multi instance&#xA0; scenarios like web farm you want to get a token and end point from REST once and have ability recreate CloudMediaContext based on values which you already got previously.</p>
+<p>&#xA0; </p>
+<pre class="csharpcode"> MediaServicesCredentials mediaServicesCredentials = <span class="kwrd">new</span> MediaServicesCredentials(<span class="str">&quot;myaccount&quot;</span>, <span class="str">&quot;mykey&quot;</span>);
+            
+ CloudMediaContext cntx = <span class="kwrd">new</span> CloudMediaContext(mediaServicesCredentials);
+            
+ <span class="rem">//At this point token is null since no request issued to ACS yet</span>
+ <span class="kwrd">string</span> token = mediaServicesCredentials.AccessToken;
+            
+ <span class="rem">//We are sending Request to ACS and Detecting endpoint only when we first time accessing our entities from collections</span>
+ var asset = cntx.Assets.FirstOrDefault();
+            
+DateTime exprires = mediaServicesCredentials.TokenExpiration;
+
+<span class="rem">//You can save token to cache and reassign it later in order to avoid request to ACS</span>
+<span class="rem">//Example:</span>
+<span class="rem">// MediaServicesCredentials mediaServicesCredentials = new MediaServicesCredentials(&quot;myaccount&quot;, &quot;mykey&quot;);</span>
+<span class="rem">// mediaServicesCredentials.AccessToken == token;</span>
+            
+
+<span class="rem">//You can also force token Refresh earlier. Please note that refresh happen automatically if token has been expired</span>
+mediaServicesCredentials.RefreshToken();</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>&#xA0;</p>
+<p>As you can see from example above newly added constructor allows you to create credential object and have direct access to acs token value and it&#x2019;s expiration. Once you get these values in session memory or distributed db you will be able to use it in order to recreate MediaServicesCredentials and CloudMediaContext in multiple threads without hitting ACS over and over again. Please note that you need to provide account name and key since these values are used in order to refresh token once it will be expired.</p>
+<p><strong></strong></p>
+<h3>Using OrderBy in LINQ statements</h3>
+<p>In&#xA0; 3.0.0.2 we fixed issues related to usage of&#xA0; LINQ queries with OrderBy statements:</p>
+<p>Example:</p>
+<pre class="csharpcode">  var asset1 = _mediaContext
+                .Assets
+                .OrderByDescending(c =&gt; c.Created)
+                .Where(a =&gt; a.Name.Length &gt; 1)
+                .Skip(10)
+                .Take(5)
+                .First();
+
+            var asset2 = _mediaContext
+                .Assets
+                .Where(a =&gt; a.Name.Length &gt; 1)
+                .Skip(10)
+                .Take(5)
+                .First();
+
+            var asset3 = _mediaContext
+                .Assets
+                .Where(a =&gt; a.Name.Length &gt; 1)
+                .OrderByDescending(c =&gt; c.Created)
+                .Skip(10)
+                .Take(5)
+                .First();</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>&#xA0;</p>
+<h3>For those who forking and running tests</h3>
+<p>As you might know all WAMS SDK code is hosted in github at <a href="http://web.archive.org/web/20170629233024/https://github.com/WindowsAzure/azure-sdk-for-media-services&apos;);" title="https://github.com/WindowsAzure/azure-sdk-for-media-services">https://github.com/WindowsAzure/azure-sdk-for-media-services</a> giving&#xA0; developers ability to fork, explore and contribute.</p>
+<p>Test solution has been splited into 2 separate solutions:</p>
+<ul>
+<li>Unit tests. Tests which are not require connection to REST API</li>
+<li>Scenario tests. End 2 end test which are talking with REST API.</li>
+</ul>
+<p>Also there were several refactoring within code base to make code more modular and mockable.</p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/windows-azure-media-services/" rel="tag">Windows Azure Media Services</a></p><hr>
+ 

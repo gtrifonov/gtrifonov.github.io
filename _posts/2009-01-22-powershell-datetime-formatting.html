@@ -1,0 +1,406 @@
+---
+layout: post
+title: "PowerShell DateTime formatting "
+slug: 2009-01-22-powershell-datetime-formatting
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <div style="padding-bottom: 0px; padding-left: 20px; padding-right: 15px; padding-top: 0px">This post is more a reference to how you can format DateTime in power shell. Fortunately dev&#x2019;s has full power&#xA0;to&#xA0;do custom formatting ,but you can also use quick formatting&#xA0;to display most commonly used date time output.&#xA0;</div>
+<div style="padding-bottom: 0px; padding-left: 20px; padding-right: 15px; padding-top: 0px"><strong></strong>&#xA0;</div>
+<div style="padding-bottom: 0px; padding-left: 20px; padding-right: 15px; padding-top: 0px"><strong>Quick Formatting</strong></div>
+<div style="padding-bottom: 0px; padding-left: 20px; padding-right: 15px; padding-top: 0px">&#xA0;</div>
+<div style="padding-bottom: 0px; padding-left: 20px; padding-right: 15px; padding-top: 0px">
+<table id="EPC" class="dataTable" cellspacing="0" cellpadding="3" unselectable="on" border="1">
+<thead></thead>
+<tbody>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell"><b>Specifier</b></p>
+</td>
+<td>
+<p class="lastInCell"><b>Format</b></p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell"><b>Sample Output</b></p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">d</p>
+</td>
+<td>
+<p class="lastInCell">ShortDatePattern</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">8/30/2007</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">D</p>
+</td>
+<td>
+<p class="lastInCell">LongDatePattern</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">Thursday, August 30, 2007</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">f</p>
+</td>
+<td>
+<p class="lastInCell">Full date and time (long date and short time)</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">Thursday, August 30, 20</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">F</p>
+</td>
+<td>
+<p class="lastInCell">FullDateTimePattern (long date and long time)</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">Thursday, August 30, 2007 11:19:59 AM</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">g</p>
+</td>
+<td>
+<p class="lastInCell">General (short date and short time)</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">8/30/2007 11:20 AM</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">G</p>
+</td>
+<td>
+<p class="lastInCell">General (short date and long time)</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">8/30/2007 11:20:24 AM</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">m, M</p>
+</td>
+<td>
+<p class="lastInCell">MonthDayPattern</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">August 30</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">o</p>
+</td>
+<td>
+<p class="lastInCell">Round-trip date/time pattern</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">[Text]</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">2007-08-30T11:18:49.0312500-07:00</p>
+</td>
+<td>
+<p class="lastInCell">RFC1123Pattern</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">Thu, 30 Aug 2007 11:21:36 GMT</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">s</p>
+</td>
+<td>
+<p class="lastInCell">SortableDateTimePattern (based on ISO 8601) using local time</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">2007-08-30T11:20:36</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">t</p>
+</td>
+<td>
+<p class="lastInCell">ShortTimePattern</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">11:20 AM</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">T</p>
+</td>
+<td>
+<p class="lastInCell">LongTimePattern</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">11:20:42 AM</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">u</p>
+</td>
+<td>
+<p class="lastInCell">UniversalSortableDateTimePattern using the format for universal time display</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">2007-08-30 11:21:50Z</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">U</p>
+</td>
+<td>
+<p class="lastInCell">Full date and time (long date and long time) using universal time</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">Thursday, August 30, 2007 6:21:52 PM</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">y, Y</p>
+</td>
+<td>
+<p class="lastInCell">YearMonthPattern</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">August, 2007</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="dataTableBottomMargin"></div>
+<h4><strong>Custom Formatting</strong></h4>
+<table id="EPH" class="dataTable" cellspacing="0" cellpadding="0" unselectable="on">
+<thead></thead>
+<tbody>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell"><b>Specifier</b></p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell"><b>Description</b></p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">d. %d</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The day of the month. Single-digit days will not have a leading zero. Specify &#x201C;%d&#x201D; if the format pattern is not combined with other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">dd</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The day of the month. Single-digit days will have a leading zero.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">ddd</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The abbreviated name of the day of the week.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">dddd</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The full name of the day of the week, as defined in DayNames.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">h, %h</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The hour in a 12-hour clock. Single-digit hours will not have a leading zero. Specify &#x201C;%h&#x201D; if the format pattern is not combined with other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">hh</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The hour in a 12-hour clock. Single-digit hours will have a leading zero.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">H, %H</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The hour in a 24-hour clock. Single-digit hours will not have a leading zero. Specify &#x201C;%H&#x201D; if the format pattern is not combined with other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">HH</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The hour in a 24-hour clock. Single-digit hours will have a leading zero.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">m, %m</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The minute. Single-digit minutes will not have a leading zero. Specify &#x201C;%m&#x201D; if the format pattern is not combined with other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">mm</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The minute. Single-digit minutes will have a leading zero.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">M, %M</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The numeric month. Single-digit months will not have a leading zero. Specify &#x201C;%M&#x201D; if the format pattern is not combined with other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">MM
+</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The numeric month. Single-digit months will have a leading zero.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">MMM</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The abbreviated name of the month, as defined in AbbreviatedMonthNames.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">MMMM</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The full name of the month, as defined in MonthNames.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">s, %s</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The second. Single-digit seconds will not have a leading zero. Specify &#x201C;%s&#x201D; if the format pattern is not combined with other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">ss</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The second. Single-digit seconds will have a leading zero.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">t, %t</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The first character in the AM/PM designator defined in AMDesignator or PMDesignator, if any. Specify &#x201C;%t&#x201D; if the format pattern is not combined with other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">tt</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The AM/PM designator defined in AMDesignator or PMDesignator, if any.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">y, %y</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The year without the century. If the year without the century is less than 10, the year is displayed with no leading zero. Specify &#x201C;%y&#x201D; if the format pattern is not combined with other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">yy</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The year without the century. If the year without the century is less than 10, the year is displayed with a leading zero.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">yyy</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The year in three digits. If the year is less than 100, the year is displayed with a leading zero.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">yyyy</p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">The year in four or five digits (depending on the calendar used), including the century. Will pad with leading zeroes to get four digits. Thai Buddhist and Korean calendars both have five digit years; users selecting the &#x201C;yyyy&#x201D; pattern will see all five digits without leading zeros for calendars that have five digits. Exception: the Japanese and Taiwan calendars always behave as if &#x201C;yy&#x201D; was selected.</p>
+</td>
+</tr>
+<tr class="evenRecord" valign="top">
+<td>
+<p class="lastInCell">%<i>c</i></p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">Where <i>c</i> is a format pattern if used alone. That is, to use format pattern &#x201C;d&#x201D;, &#x201C;f&#x201D;, &#x201C;F&#x201D;, &#x201C;h&#x201D;, &#x201C;m&#x201D;, &#x201C;s&#x201D;, &#x201C;t&#x201D;, &#x201C;y&#x201D;, &#x201C;z&#x201D;, &#x201C;H&#x201D;, or &#x201C;M&#x201D; by itself, specify &#x201C;%d&#x201D;, &#x201C;%f&#x201D;, &#x201C;%F&#x201D;, &#x201C;%h&#x201D;, &#x201C;%m&#x201D;, &#x201C;%s&#x201D;, &#x201C;%t&#x201D;, &#x201C;%y&#x201D;, &#x201C;%z&#x201D;, &#x201C;%H&#x201D;, or &#x201C;%M&#x201D;. The &#x201C;%&#x201D; character can be omitted if the format pattern is combined with literal characters or other format patterns.</p>
+</td>
+</tr>
+<tr class="record" valign="top">
+<td>
+<p class="lastInCell">\<i>c</i></p>
+</td>
+<td style="border-right: #cccccc 1px solid">
+<p class="lastInCell">Where <i>c</i> is any character. Displays the character literally. To display the backslash character, use &#x201C;\\&#x201D;.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="dataTableBottomMargin"></div>
+</div>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

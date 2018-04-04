@@ -1,0 +1,29 @@
+---
+layout: post
+title: "StorageClient.StorageClientException: The specified blob already exists "
+slug: 2011-06-02-storageclient.storageclientexception-the-specified-blob-already-exists
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Got interesting exception today while trying to upload multiple file blobs to Azure container.</p>
+<p>&#xA0;</p>
+<pre class="code"><span style="color: blue">private void </span>UploadFileToBlob(<span style="color: blue">string </span>url, <span style="color: #2b91af">Asset </span>asset,<span style="color: blue">string </span>filepath,<span style="color: blue">string </span>filename)
+       {
+           <span style="color: blue">var </span>container = <span style="color: blue">new </span><span style="color: #2b91af">CloudBlobContainer</span>(url);
+
+           <span style="color: green">//Get a reference to a blob, which may or may not exist.
+           </span><span style="color: #2b91af">CloudBlob </span>blob = container.GetBlobReference(filename);
+           blob.DeleteIfExists();
+           <span style="color: green">//Upload content to the blob, which will create the blob if it does not already exist.
+           </span>blob.UploadFile(filepath);
+       }</pre>
+<p>When I am executing UploadFileToBlob for one file it is working. On different multiple files it is throwing exception &#x201C;StorageClient.StorageClientException: The specified blob already exists&#x201D;.</p>
+<p>Did some research and found out that this problem associated with multithreading in local dev storage:</p>
+<p>&#x201C;<br>
+  <br>This is a known issue with development storage. This happens when there are multiple threads launched to upload the blocks (which constitute the blob). Basically what is happening is that development storage makes use of SQL Server as the data store. Now first thing it does is makes an entry into the table which stores blob information. If there are multiple threads working then all of these threads will try to perform the same operation. After the first thread succeeds, the subsequent threads will result in this exception being raised.</p>
+<p>&#x201C; </p>
+<p><a href="http://stackoverflow.com/questions/4897826/azure-storage-error-the-specified-blob-already-exists-but-it-doesn&#x2019;t</a>.</p>
+<p>Kind of weird, will try to investigate more to see how to resolve this issue and if size of file is really matter. Please let me know if you found any workarounds.</p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/upload-to-blob/" rel="tag">upload to blob</a></p><hr>
+ 

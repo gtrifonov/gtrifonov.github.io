@@ -1,0 +1,22 @@
+---
+layout: post
+title: "Microsoft Anti-Cross Site Scripting Library to prevent XSS attacks "
+slug: 2007-01-15-microsoft-anti-cross-site-scripting-library-to-prevent-xss-attacks
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>For those who are not yet familiar with <a href="http://en.wikipedia.org/wiki/Cross_site_scripting&apos;, &apos;XSS&apos;);" title="XSS - Cross site Scripting" target="_blank">XSS</a> attacks and using or planning to use AJAX technologies in you applications I recommended to download </p>
+<p><a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=EFB9C819-53FF-4F82-BFAF-E11625130C25&amp;displaylang=en&apos;, &apos;Microsoft Anti-Cross Site Scripting Library V1.5&apos;);" title="Microsoft Anti-Cross Site Scripting Library V1.5" target="_blank">Microsoft Anti-Cross Site Scripting Library V1.5</a>.</p>
+<p>From Microsoft <a href="http://msdn2.microsoft.com/en-us/security/aa973814.aspx&apos;, &apos;article&apos;);" title="Microsoft XSS Article" target="_blank">article</a> :</p>
+<h4>&#x201C;Introduction</h4>
+<p>Cross-site scripting (XSS) attacks exploit vulnerabilities in Web-based applications that fail to properly validate and/or encode input that is embedded in response data. Malicious users can then inject client-side script into response data causing the unsuspecting user&#x2019;s browser to execute the script code. The script code will appear to have originated from a trusted-site and may be able to bypass browser protection mechanisms such as security zones.
+</p><p>These attacks are platform and browser independent, and can allow malicious users to perform malicious actions such as gaining unauthorized access to client data like cookies or hijacking sessions entirely.
+</p><p>Simple steps that developers can take to prevent XSS attacks in their ASP.NET applications include (see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnpag2/html/PAGHT000004.asp&apos;, &apos;How To: Prevent Cross-Site Scripting in ASP.NET&apos;);">How To: Prevent Cross-Site Scripting in ASP.NET</a> in the patterns &amp; practices series for more detail):
+</p><ul>
+<li>Validating and constraining input
+</li><li>Encoding output</li>
+</ul>
+<p>For defence in depth, developers may wish to use the <strong>Microsoft Anti-Cross Site Scripting Library</strong> to encode output. This library differs from most encoding libraries in that it uses the &#x201C;principle of inclusions&#x201D; technique to provide protection against XSS attacks. This approach works by first defining a valid or allowable set of characters, and encodes anything outside this set (invalid characters or potential attacks). The principle of inclusions approach provides a high degree of protection against XSS attacks and is suitable for Web applications with high security requirements.&#x201D;.</p>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

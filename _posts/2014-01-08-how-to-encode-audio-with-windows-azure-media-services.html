@@ -1,0 +1,73 @@
+---
+layout: post
+title: "How to encode audio with Windows Azure Media Services "
+slug: 2014-01-08-how-to-encode-audio-with-windows-azure-media-services
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>When you creating encoding job in Windows Azure Media Services you can select encoder and corresponding configuration (preset). Windows azure Media Services supports named presets as well as presets in form of xml files.</p>
+<p>To see list of name presets for Windows Azure Media Encoder follow this link: <a href="http://msdn.microsoft.com/en-us/library/windowsazure/jj129582.aspx</a></p>
+<p>&#xA0;</p>
+<p>To see list of supported encoders, codecs and file formats follow this link:</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/windowsazure/hh973634.aspx</a></p>
+<p>&#xA0;</p>
+<p>Configuration which you need to use to encode audio with Windows Azure Media Encoder is following</p>
+<pre class="csharpcode">&lt;?xml version=<span class="str">&quot;1.0&quot;</span> encoding=<span class="str">&quot;utf-16&quot;</span>?&gt;
+&lt;!--Created with Expression Encoder version 4.0.4276.0--&gt;
+&lt;Preset
+  Version=<span class="str">&quot;4.0&quot;</span>&gt;
+  &lt;Job /&gt;
+  &lt;MediaFile
+    WindowsMediaProfileLanguage=<span class="str">&quot;ja-JP&quot;</span>
+    VideoResizeMode=<span class="str">&quot;Letterbox&quot;</span>&gt;
+    &lt;OutputFormat&gt;
+      &lt;MP4OutputFormat
+        StreamCompatibility=<span class="str">&quot;Standard&quot;</span>&gt;
+        &lt;AudioProfile&gt;
+          &lt;AacAudioProfile
+            Level=<span class="str">&quot;AacLC&quot;</span>
+            Codec=<span class="str">&quot;AAC&quot;</span>
+            Channels=<span class="str">&quot;2&quot;</span>
+            BitsPerSample=<span class="str">&quot;16&quot;</span>
+            SamplesPerSecond=<span class="str">&quot;44100&quot;</span>&gt;
+            &lt;Bitrate&gt;
+              &lt;ConstantBitrate
+                Bitrate=<span class="str">&quot;256&quot;</span>
+                IsTwoPass=<span class="str">&quot;False&quot;</span>
+                BufferWindow=<span class="str">&quot;00:00:00&quot;</span> /&gt;
+            &lt;/Bitrate&gt;
+          &lt;/AacAudioProfile&gt;
+        &lt;/AudioProfile&gt;
+      &lt;/MP4OutputFormat&gt;
+    &lt;/OutputFormat&gt;
+  &lt;/MediaFile&gt;
+&lt;/Preset&gt;</pre>
+<p>General process of creating job can be found&#xA0; <a href="http://web.archive.org/web/20170629233811/https://github.com/WindowsAzure/azure-sdk-for-media-services/tree/dev/test&apos;);">https://github.com/WindowsAzure/azure-sdk-for-media-services/tree/dev/test</a></p>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/media-services/" rel="tag">media services</a></p><hr>
+ 

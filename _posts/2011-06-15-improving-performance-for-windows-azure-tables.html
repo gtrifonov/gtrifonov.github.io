@@ -1,0 +1,201 @@
+---
+layout: post
+title: "Improving performance for Windows Azure tables "
+slug: 2011-06-15-improving-performance-for-windows-azure-tables
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Original article <a href="http://social.msdn.microsoft.com/Forums/en-US/windowsazuredata/thread/d84ba34b-b0e0-4961-a167-bbe7618beb83&apos;, &apos;NET and ADO.NET Data Service Performance Tips for Windows Azure Tables&apos;);">NET and ADO.NET Data Service Performance Tips for Windows Azure Tables</a>.</p>
+<p>&#xA0;</p>
+<p>Summary:</p>
+<p><strong>Default .NET HTTP connections is set to 2</strong></p>
+<pre class="csharpcode">Config file:  
+  <span class="kwrd">&lt;</span><span class="html">system.net</span><span class="kwrd">&gt;</span> 
+    <span class="kwrd">&lt;</span><span class="html">connectionManagement</span><span class="kwrd">&gt;</span> 
+      <span class="kwrd">&lt;</span><span class="html">add</span> <span class="attr">address</span> = <span class="kwrd">&quot;*&quot;</span> <span class="attr">maxconnection</span> = <span class="kwrd">&quot;48&quot;</span> <span class="kwrd">/&gt;</span> 
+    <span class="kwrd">&lt;/</span><span class="html">connectionManagement</span><span class="kwrd">&gt;</span> 
+  <span class="kwrd">&lt;/</span><span class="html">system.net</span><span class="kwrd">&gt;</span> 
+
+In code:  
+ServicePointManager.DefaultConnectionLimit = 48; </pre>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<p><strong>Turn off 100-continue (saves 1 roundtrip)</strong></p>
+<ol>
+<pre class="csharpcode">Code:  
+ServicePointManager.Expect100Continue = false; // or on service point if only a particular service needs to be disabled.  
+ 
+Config file:  
+<span class="kwrd">&lt;</span><span class="html">system.net</span><span class="kwrd">&gt;</span> 
+
+    <span class="kwrd">&lt;</span><span class="html">settings</span><span class="kwrd">&gt;</span> 
+
+      <span class="kwrd">&lt;</span><span class="html">servicePointManager</span> <span class="attr">expect100Continue</span><span class="kwrd">=&quot;false&quot;</span> <span class="kwrd">/&gt;</span> 
+
+    <span class="kwrd">&lt;/</span><span class="html">settings</span><span class="kwrd">&gt;</span> 
+ 
+<span class="kwrd">&lt;/</span><span class="html">system.net</span><span class="kwrd">&gt;</span> </pre>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+</ol>
+<p><strong>To improve performance of ADO.NET Data Service deserialization name CLR Enity and table identically and use ResolveType on the</strong> </p>
+<pre class="csharpcode"><span class="kwrd">public</span> <span class="kwrd">void</span> Query(DataServiceContext context) 
+                {  
+                     <span class="rem">// set the ResolveType to a method that will return the appropriate type to creat</span>
+
+                     context.ResolveType = <span class="kwrd">this</span>.ResolveEntityType;   
+
+                }  
+ <span class="kwrd">public</span> Type ResolveEntityType(<span class="kwrd">string</span> name) 
+ {  
+
+                      <span class="rem">// if the context handles just one type, you can return it without checking the   </span>
+                      <span class="rem">// value of &quot;name&quot;.  Otherwise, check for the name and return the appropriate  </span>
+                      <span class="rem">// type (maybe a map of Dictionary&lt;string, Type&gt; will be useful) </span>
+
+                      Type type  = <span class="kwrd">typeof</span>(Customer);
+                      <span class="kwrd">return</span> type;  
+}  </pre>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<p><strong>Turn entity tracking off for query results that are not going to be modified.</strong></p>
+<ol>
+<pre class="csharpcode">context.MergeOption = MergeOption.NoTracking;</pre>
+<p>  <strong>Use unconditional updates/deletes</strong></p></ol>
+<ol>
+<pre class="csharpcode">context.AttachTo(<span class="str">&quot;TableName&quot;</span>, entity, <span class="str">&quot;*&quot;</span>);   
+context.UpdateObject(entity); </pre>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+</ol>
+<p>&#xA0;<strong>Turning off Nagle may help Inserts/Updates</strong></p>
+<pre class="csharpcode">Code:   
+ServicePointManager.UseNagleAlgorithm = <span class="kwrd">false</span>; 
+
+Config file: 
+
+&lt;system.net&gt; 
+    &lt;settings&gt; 
+      &lt;servicePointManager expect100Continue=<span class="str">&quot;false&quot;</span> useNagleAlgorithm=<span class="str">&quot;false&quot;</span>/&gt; 
+    &lt;/settings&gt; 
+&lt;/system.net&gt; </pre>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/performance/" rel="tag">Performance</a></p><hr>
+ 

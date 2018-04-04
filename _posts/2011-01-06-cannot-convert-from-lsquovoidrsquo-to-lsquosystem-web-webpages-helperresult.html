@@ -1,0 +1,14 @@
+---
+layout: post
+title: "cannot convert from ‘void’ to ‘System.Web.WebPages.HelperResult "
+slug: 2011-01-06-cannot-convert-from-lsquovoidrsquo-to-lsquosystem-web-webpages-helperresult
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Today i was trying to convert ASP.NET MVC 2 master pages to ASP.NET MVC3 Razor master layout.chtml and hit following error trying to call </p>
+<p>@Html.RenderAction(&#x201C;Footer&#x201D;, &#x201C;Root&#x201D;); which has been converted from &lt;% Html.RenderAction(&#x201C;Footer&#x201D;, &#x201C;Root&#x201D;); %&gt;.</p>
+<p>To solve problem simply use @{Html.RenderAction(&#x201C;Footer&#x201D;, &#x201C;Root&#x201D;); }. It calls RenderAction and ignores return type. </p>
+<p>@Html.RenderAction(&#x201C;Footer&#x201D;, &#x201C;Root&#x201D;); is trying to write output to stream and failing.</p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/mvc/" rel="tag">mvc</a></p><hr>
+ 

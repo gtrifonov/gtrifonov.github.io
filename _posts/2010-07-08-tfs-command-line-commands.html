@@ -1,0 +1,417 @@
+---
+layout: post
+title: "TFS command line commands "
+slug: 2010-07-08-tfs-command-line-commands
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p><span style="text-align: left; widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: 14px &apos;Segoe UI&apos;, &apos;Lucida Grande&apos;, verdana, arial, helvetica, sans-serif; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(51,51,51); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 18px; font-size: 12px" class="Apple-style-span">
+</span></span></p><p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"></span></p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"></span></p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">COMMANDS
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Add<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf add itemspec [lock:none|checkin|checkout] [/type:filetype]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/noprompt] [/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Branch<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf branch olditem newitem [/version:versionspec] [/noget] [/lock]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/noprompt] [/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Branches<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf branches [/s:servername] itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Changeset<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>tf changeset [/comment:comment|@commentfile] /s:servername
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/notes:(&quot;NoteFieldName&quot;=&quot;NoteFieldValue&quot;|@notefile)] [/noprompt]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>([/latest]|changesetnumber)
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Checkin<span>&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf checkin [/author:authorname] [/comment:(&quot;comment&quot;|@commentfile)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/noprompt]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/notes:(&quot;Note Name&quot;=&quot;note text&quot;|@notefile)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/override:reason|@reason] [/recursive] filespec &#x2026;]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Checkout<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf checkout|edit [/lock:(none|checkin|checkout)] [/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0i
+n 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/type:encoding] itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Configure<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>tf configure pathtoproject /server:servername
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Delete<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf delete [/lock:(none|checkin|checkout)] [/recursive] itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Difference tf difference itemspec [/version:versionspec] [/type:filetype]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/format:(visual|unix|ss)] [/ignorespace]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/ignoreeol] [/ignorecase] [/recursive] [/options:&quot;options&quot;]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf difference itemspec itemspec2 [/type:filetype]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/format:(visual|unix|ss)] [/ignorespace] [/ignoreeol]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/ignorecase] [/recursive] [/options:&quot;options&quot;]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf difference [/shelveset:[shelvesetowner;]shelvesetname]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>shelveset_itemspec [/server:serverURL]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/type:filetype] [/format:(visual|unix|ss)] [/ignorespace]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/ignoreeol] [/ignorecase] [/recursive] [/options:&quot;options&quot;]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf difference /configure
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Dir<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf dir [/s:servername] itemspec [/version:versionspec] [/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/folders] [/deleted]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="M
+soNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Get<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf get itemspec [/version:versionspec] [/all] [/overwrite] [/force]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/preview] [/recursive] [/noprompt]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Help<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf help commandname
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">History<span>&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf history [/s:servername] itemspec [/version:versionspec]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/stopafter:number] [/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/user:username] [/format:(brief|detailed)] [/slotmode]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Label<span>&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf label [/s:servername]<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>labelname@scope [/owner:ownername]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>itemspec [/version:versionspec]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/comment:(&quot;comment&quot;|@commentfile)] [/child:(replace|merge)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf label [/s:servername] [/delete] labelname@scope
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/owner:ownername] itemspec [/version:versionspec]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Labels<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf labels [/owner:ownername] [/format:(brief|detailed)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/s:servername] [labelname]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Lock<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf lock itemspec /lock:(none|checkout|checkin)
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&amp;#16<br>
+0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/workspace:workspacename] [/server:serverURL] [/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/noprompt]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Merge<span>&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf merge<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>[/recursive] [/force] [/candidate] [/discard]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/version:versionspec]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/lock:none|checkin|checkout] [/preview] [/baseless] [/nosummary]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>source destination
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Merges<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf merges [/s:servername] [source] destination [/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Permission tf permission [/allow:(* |perm1[,perm2,&#x2026;]]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/deny:(*|perm1[,perm2,&#x2026;])]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/remove:(* |perm1[,perm2,&#x2026;])]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/inherit:yes|no] [/user:username1[,username2,&#x2026;]] [/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/group:groupname1[,groupname2,&#x2026;]]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/server:servername] itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Properties tf properties [/recursive] itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Rename<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf rename [/lock:(none|checkout|checkin)] olditem newitem
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Resolve<span>&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf resolve itemspec [auto:(AcceptMerge|AcceptTheirs|AcceptYours)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/preview]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; borde
+r-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[(/overridetype:overridetype | /converttotype:converttype)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/recursive]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Shelve<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf shelve [/move] [/replace] [/comment:(@commentfile|&quot;comment&quot;)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/recursive] shelvesetname[;owner] filespec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf shelve /delete [/server:serverURL] shelvesetname[;owner]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Shelvesets tf shelvesets [/owner:ownername] [/format:(brief|detailed)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/server:serverURL] shelvesetname
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Status<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf status itemspec [/s:servername]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>([/workspace:workspacename[;workspaceowner]] |
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/shelveset:shelvesetname[;shelvesetowner]])
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/format:(brief|detailed)] [/recursive] [/user:(*|username)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Undelete<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf undelete [/noget] [/lock:(none|checkin|checkout)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/newname:name] [/recursive] itemspec[;deletionID]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Undo<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf undo [/workspace:workspacename<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[;workspaceowner]]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/s:servername] [/recursive] itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Unlabel<span>&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf unlabel [/s:servername] [/recursive] labelname itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Unshelve<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf unshelve [/move] [shelvesetname[;username]] itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">View<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf view [/s:servername] [/console] [/noprompt] itemspec
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/version:versionspec]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">WorkFold<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workfold localfolder
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workfold [/workspace: workspacename]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workfold [/s:servername] [/workspace: workspacename]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>repositoryfolder
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workfold [/map] [/s:servername] [/workspace: workspacename]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span><span>&#xA0;&#xA0;&#xA0; </span>repositoryfolder|localfolder
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workfold /unmap [/s:servername] [/workspace: workspacename]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/recursive] (repositoryfolder|localfolder)
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workfold /cloak (repositoryfolder|localfolder)
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/workspace: workspacename] [/s:servername]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workfold /decloak (repositoryfolder|localfolder)
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/workspace:workspacename] [/s:servername]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Workspace<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>tf workspace /new [/noprompt]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/template:workspacename[;workspaceowner]]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium n
+one; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; </span>[/computer:computername] [/comment:(&quot;comment&quot;|@commentfile)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/s:servername]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workspace /delete [/s:servername]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>workspacename[;workspaceowner]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>tf workspace [/s:servername] [/comment:comment]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;</span><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/newname:workspacename] workspacename[;workspaceowner]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">Workspaces tf workspaces [/owner:ownername] [/computer:computername]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/s:servername] [/format:(brief|detailed)]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/updateUserName:oldusername]
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>[/updateComputerName:oldcomputername] workspacename
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">
+</span></p><p>&#xA0;</p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">ITEMSPECS
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Can contain wildcards *, ? and #
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Can contain relative path parts . and ..
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Can reference file system or UNC paths mapped to a workspace or server
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>paths (which start with $/). You can usually specify more than one
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>file separated by spaces for an itemspec (useful for edit, add, delete
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>commands)
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">
+</span></p><p>&#xA0;</p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">VERSIONSPECS
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Date/Time<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>Dmm/dd/yyyy
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Changeset number<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Cnnnnnn
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Label<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>Llabelname
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Latest version<span>&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>T
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>Workspace<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>Wworkspacename;workspaceowner
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">
+</span></p><p>&#xA0;</p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt">ALIASES
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/changeset<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/G<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/noprompt<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/I
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/comment<span>&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/C<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/owner<span>&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/O
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/computer<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/M<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/recursive<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/R
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/delete<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/D<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/server<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/S
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/force<span>&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/P<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/slotmode<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/X
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/format<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/F<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/template<span>&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/T
+</span></p>
+<p>       </p>
+<p style="border-bottom:
+medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/help<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/?,/H<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/user<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/U
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/lock<span>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/K<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/version<span>&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/V
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/login<span>&#xA0;&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/Y<span>&#xA0;&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/workplace<span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/W
+</span></p>
+<p>       </p>
+<p style="border-bottom: medium none; border-left: medium none; padding-bottom: 0in; margin: 0in 0in 0pt; padding-left: 0in; padding-right: 0in; border-top: medium none; border-right: medium none; padding-top: 0in" class="MsoNormal"><span style="font-family: &apos;Courier New&apos;; font-size: 9pt"><span>&#xA0;<span class="Apple-converted-space">&#xA0;</span></span>/newname<span>&#xA0;&#xA0; <span class="Apple-converted-space">&#xA0;</span></span>/N<span>&#xA0;&#xA0;&#xA0; </span></span></p>
+<p>   </p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/tools/" rel="tag">Tools</a></p><hr>
+ 

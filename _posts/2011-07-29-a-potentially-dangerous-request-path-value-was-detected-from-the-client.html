@@ -1,0 +1,17 @@
+---
+layout: post
+title: "A potentially dangerous Request.Path value was detected from the client "
+slug: 2011-07-29-a-potentially-dangerous-request-path-value-was-detected-from-the-client
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>I have a Odata service implementation and started getting errors where one of parameters in query has &#x2018;:&#x2019;.</p>
+<p>Solution:</p>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">system.web</span><span style="color: blue">&gt;
+    &lt;</span><span style="color: #a31515">httpRuntime </span><span style="color: red">requestValidationMode</span><span style="color: blue">=</span>&quot;<span style="color: blue">2.0</span>&quot; <span style="color: red">requestPathInvalidCharacters</span><span style="color: blue">=</span>&quot;&quot;<span style="color: blue">/&gt;
+</span></pre>
+<pre class="code"><span style="color: blue">&lt;</span><span style="color: #a31515">pages </span><span style="color: red">validateRequest</span><span style="color: blue">=</span>&quot;<span style="color: blue">false</span>&quot;<span style="color: blue">&gt;
+</span></pre>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/web.config/" rel="tag">web.config</a></p><hr>
+ 

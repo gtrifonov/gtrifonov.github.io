@@ -1,0 +1,29 @@
+---
+layout: post
+title: "Deploying MVC dependencies to Azure "
+slug: 2011-06-02-deploying-mvc-dependencies-to-azure
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>If you creating web application to be deployed to Windows Azure, you probably noticed that deployment and azure instance initialization may take a while. Any missing reference or break will cause you time and lost productivity.</p>
+<p>Few days ago I spent couple of hours trying to include all mvc references one by one making sure that application app has minimum set of required assemblies.</p>
+<p>Phil hack published an article <a href="http://haacked.com/archive/2011/05/25/bin-deploying-asp-net-mvc-3.aspx</a> regarding how to include MVC,Razor dependencies into your deployment.</p>
+<p>By default Azure instance will not have required packages installed. So you need to make sure that all files will be located in your bin folder. </p>
+<p>&#x201C;If your server doesn&#x2019;t have ASP.NET MVC 3 installed, you&#x2019;ll need to make sure the following set of assemblies are deployed in the bin folder of your web application:</p>
+<ul>
+<li>Microsoft.Web.Infrastructure.dll </li>
+<li>System.Web.Helpers.dll </li>
+<li>System.Web.Mvc.dll </li>
+<li>System.Web.Razor.dll </li>
+<li>System.Web.WebPages.Deployment.dll </li>
+<li>System.Web.WebPages.dll </li>
+<li>System.Web.WebPages.Razor.dll </li>
+</ul>
+<p>&#x201D;</p>
+<p>Simply right click on your project to add deployable dependencies.</p>
+<p>&#xA0;<img alt="add-deployable-assemblies" src="http://gtrifonov.azurewebsites.net/wp-content/uploads/2011/06/add-deployable-assemblies_3.png"></p>
+<p>For other GAC assemblies which are not part of .net 4.0 framework make sure to set Copy Local flag to true:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2011/06/image_thumb.png" width="299" height="442"></a></p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/deployment/" rel="tag">Deployment</a></p><hr>
+ 

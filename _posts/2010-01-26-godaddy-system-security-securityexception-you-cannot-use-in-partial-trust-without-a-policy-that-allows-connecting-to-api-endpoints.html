@@ -1,0 +1,20 @@
+---
+layout: post
+title: "Godaddy-System.Security.SecurityException: You cannot use  in partial trust without a policy that allows connecting to API endpoints. "
+slug: 2010-01-26-godaddy-system-security-securityexception-you-cannot-use-in-partial-trust-without-a-policy-that-allows-connecting-to-api-endpoints
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>I am using hosting from GoDaddy.com and yesterday got exception playing with Twitter API library &#x2013; TweetSharp .</p>
+<p>System.Security.SecurityException: You cannot use TweetSharp in partial trust without a policy that allows connecting to API endpoints.</p>
+<p>&#xA0;</p>
+<p><b>Exception Details: </b>System.Security.SecurityException: You cannot use TweetSharp in partial trust without a policy that allows connecting to API endpoints.    <br>The following policy information (or equivalent) must be added to your trust policy:    <br>&lt;IPermission class=&quot;System.Net.WebPermission, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;    <br>version=&quot;1&quot;&gt;    <br>&lt;ConnectAccess&gt;    <br>&lt;URI uri=&quot;http://twitter\.com/.*&quot;/&gt;    <br>&lt;URI uri=&quot;http://api.twitter\.com/.*&quot;/&gt;    <br>&lt;URI uri=&quot;http://search.twitter\.com/.*&quot;/&gt;    <br>&lt;/ConnectAccess&gt;    <br>&lt;/IPermission&gt;</p>
+<p>After searching I found that GoDaddy will not allow me to modify their policy, since it is shared hosting account. Resolution is to apply WebPermissions in your code:</p>
+<p>&#xA0;</p>
+<p>var permissions = new WebPermission();   <br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; var baseUrl = @&quot;<a href="http://search.twitter\.com/*&quot;;</a></p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; permissions.AddPermission(NetworkAccess.Connect, baseUrl);   <br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; permissions.AddPermission(NetworkAccess.Connect, apiUrl);    <br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; permissions.AddPermission(NetworkAccess.Connect, searchUrl); </p>
+<p>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; try   <br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; {    <br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; permissions.Demand();    <br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; }</p>
+<p>Please note that in case of GoDaddy, you don&#x2019;t need to use regexp as urls.&#xA0; </p>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

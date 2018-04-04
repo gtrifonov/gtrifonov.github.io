@@ -1,0 +1,17 @@
+---
+layout: post
+title: "ASP.NET 2.0 URL Rewriting "
+slug: 2006-10-06-asp-net-2-0-url-rewriting
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>&#xA0;Today I spent just 15 minutes in researching asp.net 2.0 URL rewriting functionality for my blog and found that it only support &#x201C;hard coded&#x201D; rewriting. I wanted to make my blog more search friendly. Unfortunately asp.net 2.0 is not supporting any dynamic parsing or parameters like regexp parsing. You can add rewriting by modifying web.config file of your application adding code below.</p>
+<pre>&lt;urlMappings&gt;
+    &lt;add url=&quot;~/category/toothpicks.aspx&quot;<br>         mappedUrl=&quot;~/displaycategory.aspx?Category=1&quot;/&gt;
+    &lt;add url=&quot;~/category/drinkumbrellas.aspx&quot;<br>         mappedUrl=&quot;~/displaycategory.aspx?Category=2&quot;/&gt;
+    &lt;add url=&quot;~/category/fancypants.aspx&quot;<br>         mappedUrl=&quot;~/displaycategory.aspx?Category=3&quot;/&gt;
+&lt;/urlMappings&gt;</pre>
+<p>By searching web and&#xA0;I found tons of examples of regexp rewriting, especially I liked Scott Mitchell MSDN article<br><a href="http://msdn.microsoft.com/asp.net/using/building/web/default.aspx?pull=/library/en-us/dnaspp/html/urlrewriting.asp&apos;, &apos;URL Rewriting in ASP.NET&apos;);">URL Rewriting in ASP.NET</a> with code examples.This article has been written before ASP.NET 2.0 release, so for me it&#x2019;s a little disappointment why guys from asp.net team didn&#x2019;t use the same approach in their 2.0 bits.</p>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

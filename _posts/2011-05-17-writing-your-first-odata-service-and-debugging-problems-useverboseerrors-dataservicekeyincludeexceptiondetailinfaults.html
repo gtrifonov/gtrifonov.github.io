@@ -1,0 +1,118 @@
+---
+layout: post
+title: "Writing your first Odata service and debugging problems. UseVerboseErrors, DataServiceKey,IncludeExceptionDetailInFaults "
+slug: 2011-05-17-writing-your-first-odata-service-and-debugging-problems-useverboseerrors-dataservicekeyincludeexceptiondetailinfaults
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Today I wanted to created simple out of a box Odata service using WCF Dataservice. My entry page was <a href="http://www.odata.org/</a> I watched couple of tutorials how to add service to mvc project.</p>
+<p>very simple and straight forward, but I failed getting message&#xA0; &#x201C; An error occurred while processing this request. &#x201D;. While trying to debug it by normal means and looking into logs bring me nothing which can help solve issue.</p>
+<p>I searched and find nice post <a href="http://blogs.msdn.com/b/phaniraj/archive/2008/06/18/debugging-ado-net-data-services.aspx</a> explaining how to get error details. essentially you need just two steps:</p>
+<p>First set config.UseVerboseErrors = <span class="kwrd">true in your service cs file</span></p>
+<div class="csharpcode">
+<pre class="alt"><span class="lnum">   1:  </span> <span class="rem">// This method is called only once to initialize service-wide policies.</span></pre>
+<pre><span class="lnum">   2:  </span>        <span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">void</span> InitializeService(DataServiceConfiguration config)</pre>
+<pre class="alt"><span class="lnum">   3:  </span>        {</pre>
+<pre><span class="lnum">   4:  </span>            <span class="rem">// TODO: set rules to indicate which entity sets and service operations are visible, updatable, etc.</span></pre>
+<pre class="alt"><span class="lnum">   5:  </span>            <span class="rem">// Examples:</span></pre>
+<pre><span class="lnum">   6:  </span>            config.UseVerboseErrors = <span class="kwrd">true</span>;</pre>
+<pre class="alt"><span class="lnum">   7:  </span>            config.SetEntitySetAccessRule(<span class="str">&quot;ExampleClass&quot;</span>, EntitySetRights.AllRead);</pre>
+<pre><span class="lnum">   8:  </span>            <span class="rem">// config.SetServiceOperationAccessRule(&quot;MyServiceOperation&quot;, ServiceOperationRights.All);</span></pre>
+<pre class="alt"><span class="lnum">   9:  </span>            config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V2;</pre>
+<pre><span class="lnum">  10:  </span>        }</pre>
+</div>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<p>Second: attribute your class with ServiceBehavior(IncludeExceptionDetailInFaults = <span class="kwrd">true</span>)] </p>
+<p></p><pre class="csharpcode">[System.ServiceModel.ServiceBehavior(IncludeExceptionDetailInFaults = <span class="kwrd">true</span>)]
+  <span class="kwrd">public</span> <span class="kwrd">class</span> ExampleService : DataService&lt;  ExampleContext &gt;</pre>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<p></p>
+<p><strong>Ok once this has been changed I got nice error:</strong></p>
+<p>The server encountered an error processing the request. The exception message is &#x2018;On data context type &#x2018;ExampleContext&#x2019;, there is a top IQueryable property &#x2018;Examples&#x2019; whose element type is not an entity type. Make sure that the IQueryable property is of entity type or specify the IgnoreProperties attribute on the data context type to ignore this property.&#x2019;. See server logs for more details. The exception stack trace is: </p>
+<p>at System.Data.Services.Providers.ReflectionServiceProvider.PopulateMetadata(IDictionary`2 knownTypes, IDictionary`2 childTypes, IDictionary`2 entitySets) at System.Data.Services.Providers.BaseServiceProvider.PopulateMetadata() at System.Data.Services.DataService`1.CreateProvider() at System.Data.Services.DataService`1.HandleRequest() at System.Data.Services.DataService`1.ProcessRequestForMessage(Stream messageBody) at SyncInvokeProcessRequestForMessage(Object , Object[] , Object[] ) at System.ServiceModel.Dispatcher.SyncMethodInvoker.Invoke(Object instance, Object[] inputs, Object[]&amp; outputs) at System.ServiceModel.Dispatcher.DispatchOperationRuntime.InvokeBegin(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage5(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage41(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage4(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage31(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage3(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage2(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage11(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage1(MessageRpc&amp; rpc) at System.ServiceModel.Dispatcher.MessageRpc.Process(Boolean isOperationContextSet)</p>
+<p>&#xA0;</p>
+<p>After searching a little bit I found that you need attribute your entity with primary key attribute DataServiceKey</p>
+<p>&#xA0;</p>
+<pre class="csharpcode">[DataServiceKey(<span class="str">&quot;Id&quot;</span>)]
+    <span class="kwrd">public</span> <span class="kwrd">class</span> ExampleClass
+    {
+
+         <span class="kwrd">public</span> <span class="kwrd">string</span> Name { get; set; }
+         <span class="kwrd">public</span> <span class="kwrd">string</span> Id { get; set; }
+    }</pre>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/wcf-data-services/" rel="tag">wcf data services</a></p><hr>
+ 

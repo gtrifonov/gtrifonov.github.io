@@ -1,0 +1,244 @@
+---
+layout: post
+title: "WCF WebHttp REST Entity Service Test Scenarios "
+slug: 2011-05-23-wcf-webhttp-rest-entity-service-test-scenarios
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p><span style="line-height: normal; widows: 2; text-transform: none; text-indent: 0px; letter-spacing: normal; border-collapse: separate; font-family: ; white-space: normal; orphans: 2; color: ; word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="font-family: " class="Apple-style-span"><br>
+</span></span></p><h3><font face="Verdana"><font size="2">Original content published at </font><a href="http://code.msdn.microsoft.com/WCF-WebHttp-REST-Entity-35712921</font></a></font></h3>
+<h3><font face="Verdana"><font style="font-weight: bold" size="2">Canonical REST Entity Service URI Map</font></font></h3>
+<p><font size="2"><font face="Verdana">Base URI: http://tempuri.org/Resource where Resource is the name of the REST collection (i.e. Customers, Orders etc.)            </font></font></p><font size="2"><font face="Verdana">
+</font><p><font face="Verdana">Web Formats XML and JSON are supported for all request/response messages</font>           </p>
+</font><p><font size="2"></font></p>
+<table style="word-spacing: normal" width="539">
+<tbody>
+<tr>
+<th width="68"><font size="1" face="Verdana">URI Template</font></th>
+<th width="60"><font size="1" face="Verdana">HTTP Method</font></th>
+<th width="230"><font size="1" face="Verdana">Description</font></th>
+<th width="48"><font size="1" face="Verdana">Status</font></th>
+<th width="76"><font size="1" face="Verdana">Response Content</font></th>
+<th width="55"><font size="1" face="Verdana">Response Contains</font></th>
+</tr>
+<tr>
+<td width="68"><strong><font size="1" face="Verdana">/{key}</font></strong></td>
+<td width="60"><font size="1" face="Verdana">GET</font></td>
+<td width="230"><font size="1" face="Verdana">Gets a resource by key</font></td>
+<td width="48"><font size="1" face="Verdana">200</font></td>
+<td width="76"><font size="1" face="Verdana">OK</font></td>
+<td width="55"><font size="1" face="Verdana">Serialized resource</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">304</font></td>
+<td width="76"><font size="1" face="Verdana">Not Modified</font></td>
+<td width="55"><font size="1" face="Verdana">Empty</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">400</font></td>
+<td width="76"><font size="1" face="Verdana">Bad Request</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">404</font></td>
+<td width="76"><font size="1" face="Verdana">Not Found</font></td>
+<td width="55"><font size="1" face="Verdana">Empty</font></td>
+</tr>
+<tr>
+<td width="68"><strong><font size="1" face="Verdana">/?skip={skip}&amp;take={take}</font></strong></td>
+<td width="60"><font size="1" face="Verdana">GET</font></td>
+<td width="230"><font size="1" face="Verdana">Gets a list of resources starting with skip+1 and returning take</font></td>
+<td width="48"><font size="1" face="Verdana">200</font></td>
+<td width="76"><font size="1" face="Verdana">OK</font></td>
+<td width="55"><font size="1" face="Verdana">Serialized resources</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">400</font></td>
+<td width="76"><font size="1" face="Verdana">Bad Request</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><strong><font size="1" face="Verdana">/</font></strong></td>
+<td width="60"><font size="1" face="Verdana">POST</font></td>
+<td width="230"><font size="1" face="Verdana">Adds a resource to the collection</font></td>
+<td width="48"><font size="1" face="Verdana">200</font></td>
+<td width="76"><font size="1" face="Verdana">OK</font></td>
+<td width="55"><font size="1" face="Verdana">Serialized resource</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">204</font></td>
+<td width="76"><font size="1" face="Verdana">No Content</font></td>
+<td width="55"><font size="1" face="Verdana">Empty</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">400</font></td>
+<td width="76"><font size="1" face="Verdana">Bad Request</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">409</font></td>
+<td width="76"><font size="1" face="Verdana">Conflict</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><strong><font size="1" face="Verdana">/{key}</font></strong></td>
+<td width="60"><font size="1" face="Verdana">PUT</font></td>
+<td width="230"><font size="1" face="Verdana">Adds or Updates a resource identified by {key}. Some services might not allow add with PUT. If you return the updated resource, return 200. If you don&#x2019;t return 204.</font></td>
+<td width="48"><font size="1" face="Verdana">200</font></td>
+<td width="76"><font size="1" face="Verdana">OK</font></td>
+<td width="55"><font size="1" face="Verdana">Updated resource</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">204</font></td>
+<td width="76"><font size="1" face="Verdana">No Content</font></td>
+<td width="55"><font size="1" face="Verdana">Empty</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1
+" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">400</font></td>
+<td width="76"><font size="1" face="Verdana">Bad Request</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">404</font></td>
+<td width="76"><font size="1" face="Verdana">Not Found</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">409</font></td>
+<td width="76"><font size="1" face="Verdana">Conflict</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><strong><font size="1" face="Verdana">/{key}</font></strong></td>
+<td width="60"><font size="1" face="Verdana">DELETE</font></td>
+<td width="230"><font size="1" face="Verdana">Removes the resource identified by {key}. If you return the resource removed, return 200. If you don&#x2019;t return 204.</font></td>
+<td width="48"><font size="1" face="Verdana">200</font></td>
+<td width="76"><font size="1" face="Verdana">OK</font></td>
+<td width="55"><font size="1" face="Verdana">Deleted Resource</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">204</font></td>
+<td width="76"><font size="1" face="Verdana">No Content</font></td>
+<td width="55"><font size="1" face="Verdana">Empty</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">400</font></td>
+<td width="76"><font size="1" face="Verdana">Bad Request</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">404</font></td>
+<td width="76"><font size="1" face="Verdana">Not Found</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+<tr>
+<td width="68"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="60"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="230"><font size="1" face="Verdana">&#xA0;</font></td>
+<td width="48"><font size="1" face="Verdana">409</font></td>
+<td width="76"><font size="1" face="Verdana">Conflict</font></td>
+<td width="55"><font size="1" face="Verdana">Empty or Serialized error message</font></td>
+</tr>
+</tbody>
+</table>
+<p><font size="2" face="Verdana">&#xA0;</font></p>
+<h2><font face="Verdana"><font style="font-weight: bold" size="2">GET TESTS</font></font></h2>
+<p>&#xA0;</p>
+<h3><strong><font size="2" face="Verdana">Tests<span class="Apple-converted-space">&#xA0;</span>GET /{key}</font></strong></h3>
+<ol>
+<li><font size="2" face="Verdana">GET MUST return a resource given a key if the resource with that key exists</font> </li>
+<li><font size="2" face="Verdana">GET MUST return 400-BadRequest if the key is invalid</font> </li>
+<li><font size="2" face="Verdana">GET MUST return 404-NotFound if the key is not found</font> </li>
+<li><font size="2" face="Verdana">GET MUST return 304-NotModified if Conditional GET conditions are met using If-None-Match</font> </li>
+<li><font size="2" face="Verdana">GET SHOULD return an ETag header</font> </li>
+</ol>
+<h3><strong><font size="2" face="Verdana">Tests<span class="Apple-converted-space">&#xA0;</span>GET /?skip={skip}&amp;take={take}</font></strong></h3>
+<ol>
+<li><font size="2" face="Verdana">GET MUST skip {skip} resources in the collection and return up to {take} resources.</font> </li>
+<li><font size="2" face="Verdana">GET MUST return resources starting with the first one when {skip} is not defined</font> </li>
+<li><font size="2" face="Verdana">GET MUST return zero resources when {skip} is greater than the number of resources in the collection</font> </li>
+<li><font size="2" face="Verdana">GET MUST return 400-BadRequest if {skip} is &lt; 0</font> </li>
+<li><font size="2" face="Verdana">GET MUST return zero or more resources when {take} is not provided</font> </li>
+<li><font size="2" face="Verdana">GET MUST return 400-BadRequest if {take} is &lt; 0</font> </li>
+</ol>
+<h2><font face="Verdana"><font style="font-weight: bold" size="2">POST TESTS</font></font></h2>
+<p>&#xA0;</p>
+<h4><strong><font size="2" face="Verdana">Tests<span class="Apple-converted-space">&#xA0;</span>POST /</font></strong></h4>
+<ol>
+<li><font size="2" face="Verdana">POST MUST append a valid resource to the resource collection using a server generated key and return 201 &#x2013; Created with a location header, entity tag and entity body</font> </li>
+<li><font size="2" face="Verdana">POST MUST return 400-Bad Request if the entity is invalid</font> </li>
+<li><font size="2" face="Verdana">POST MUST return 409-Conflict if the entity conflicts with another entity</font> </li>
+<li><font size="2" face="Verdana">POST MUST ignore writes to entity fields the server considers read only</font> </li>
+</ol>
+<h2><font face="Verdana"><font style="font-weight: bold" size="2">PUT TESTS</font></font></h2>
+<p>&#xA0;</p>
+<h4><strong><font size="2" face="Verdana">Tests<span class="Apple-converted-space">&#xA0;</span>PUT /{key}</font></strong></h4>
+<ol>
+<li><font size="2" face="Verdana">PUT MUST Update the entity identified by the URI if it exists and return 200-OK with the modified entity and etag header</font> </li>
+<li><font size="2" face="Verdana">PUT MAY Add a new entity using the key provided in the URI and return 201-Created with entity location and etag</font> </li>
+<li><font size="2" face="Verdana">PUT MUST respect the Precondition If-Match</font> </li>
+<li><font size="2" face="Verdana">PUT MUST be Idempotent</font> </li>
+<li><font size="2" face="Verdana">PUT MUST NOT alter the key of the entity so that it does not match the key of the URI</font> </li>
+<li><font size="2" face="Verdana">PUT MUST return 400-BadRequest if the entity is invalid</font> </li>
+<li><font size="2" face="Verdana">PUT MUST return 400-BadRequest if the key is invalid</font> </li>
+<li><font size="2" face="Verdana">PUT MUST ignore writes to entity fields the server considers read only</font> </li>
+<li><font size="2" face="Verdana">PUT MUST return 404-NotFound if the server does not allow new entities to be added with PUT</font> </li>
+</ol>
+<h2><font face="Verdana"><font style="font-weight: bold" size="2">DELETE TESTS</font></font></h2>
+<h4><strong><font size="2" face="Verdana">Tests<span class="Apple-converted-space">&#xA0;</span>DELETE /{key}</font></strong></h4>
+<ol>
+<li><font size="2" face="Verdana">DELETE SHOULD delete an entity that exists and return 200-OK with the deleted entity or 204-No Content if the response does not include the entity</font> </li>
+<li><font size="2" face="Verdana">DELETE SHOULD be idempotent</font> </li>
+<li><font size="2" face="Verdana">DELETE SHOULD return with 412-PreconditionFailed if no matching entity for If-Match etag</font> </li>
+<li><font size="2" face="Verdana">DELETE SHOULD succeed if matching entity for If-Match etag</font> </li>
+<li><font size="2" face="Verdana">DELETE SHOULD succeed if wildcard used in If-Match etag</font> </li>
+<li><font size="2" face="Verdana">DELETE SHOULD return 202-Accepted if the request to delete has not been enacted</font> </li>
+<li><font size="2" face="Verdana">DELETE SHOULD return 400-BadRequest if the key is invalid</font> </li>
+</ol>
+<p>   </p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/wcf/" rel="tag">WCF</a></p><hr>
+ 
