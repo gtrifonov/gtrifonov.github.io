@@ -1,11 +1,20 @@
 title: "George Trifonov Blog"
 description: "Work, Coding, and Life"
 repository: gtrifonov/gtrifonov.github.io
-exclude: ["CNAME", "MIT-LICENSE", "README.md"]
+exclude: ["CNAME", "MIT-LICENSE", "README.md", "Gemfile", "Gemfile.lock"]
 permalink: /:year/:month/:day/:slug/index.html
 theme: minima
+paginate: 20
 header_pages:
-  - about.md
+  - "about.md"
 plugins:
   - "jekyll-sitemap"
   - "jekyll-github-metadata"
+disqus:
+  shortname: "GeorgeTrifonov"
+twitter_username: geotrif
+github_username: gtrifonov
+linkedin_username: gtrifonov
+rss: rss
+google_analytics: UA-759938-1
+
