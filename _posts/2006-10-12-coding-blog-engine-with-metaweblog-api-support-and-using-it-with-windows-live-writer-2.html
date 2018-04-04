@@ -1,0 +1,173 @@
+---
+layout: post
+title: "Coding blog engine with MetaWeblog API support and using it with Windows Live Writer "
+slug: 2006-10-12-coding-blog-engine-with-metaweblog-api-support-and-using-it-with-windows-live-writer-2
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>&#xA0;In this article I&#x2019;d like to describe MetaWeblog API and later share some c# examples of using it with Windows Live Writer. I started thinking about writing custom blog engine which will support MetaWeblog API after discovering that <a href="http://windowslivewriter.spaces.live.com/&apos;, &apos;Windows Live Writer&apos;);">Windows Live Writer</a>&#xA0;support this API.</p>
+<p><strong>What is Windows Live Writer?</strong></p>
+<p>A Microsoft programm which allow you to make posts to most&#xA0;favorites blog engines.&#xA0;</p>
+<p><a href="http://gtrifonov.azurewebsites.netwindowslivewriter/CodingblogengineusingMetaWeblogAPIandCfo_E2AE/image0.png" width="240" border="0"></a> </p>
+<p><strong>What is MetaWeblog API?</strong></p>
+<p>The MetaWeblog API (MWA) is a programming interface that allows external programs to get and set the text and attributes of weblog posts. It builds on the popular XML-RPC communication protocol.</p>
+<p><strong>What is XML-RPC?</strong></p>
+<p>It&#x2019;s remote procedure calling using HTTP as the transport and XML as the encoding. XML-RPC is designed to be as simple as possible, while allowing complex data structures to be transmitted, processed and returned.</p>
+<p>First I&#x2019;d like briefly&#xA0;talk about XML-RPC and it&#x2019;s C# implementation. On XML-RPC <a href="http://www.xml-rpc.net/&apos;, &apos;XML-RPC.NET&apos;);">XML-RPC.NET</a> package with tons of examples and docs. Using this package you can simply add xml-rpc support to your classes by adding several attributes (XMLRpcService, XmlRpcMethod). Below you can see example of blogger class with xml-rpc support</p>
+<p>&#xA0;</p>
+<pre>[XmlRpcService(
+    Name <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">=</span> <span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;blogger&quot;</span>,
+    Description <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">=</span> <span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;This is a sample XML-RPC service illustrating method calls with simple parameters and return type.&quot;</span>,
+    AutoDocumentation <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">=</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">true</span>)]
+[XmlRpcUrl(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;http://gtrifonov.azurewebsites.net/MetaBlogApi.ashx&quot;</span>)]
+
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">class</span> blogger : XmlRpcService
+{
+ [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;metaWeblog.newPost&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> newPost(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> blogid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password, XmlRpcStruct rpcstruct, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">bool</span> publish)
+    {
+}
+}</pre>
+<p>&#xA0;As you noticed newPost method use parameter with type of XmlRpcStruct. This type represents XML-RPC struct data type .&#xA0;In XML-RPC there are few simple &#xA0;data types,array datatype &#xA0;and XML-RPC struct data type which is basically simple representation of dictionary.</p>
+<p><strong>MetaWeblog API interface</strong></p>
+<p>MetaWeblog API interface contains following methods:</p>
+<ul>
+<li>metaWeblog.newPost (blogid, username, password, struct, publish) returns string&#xA0; &#x2013; Add new post
+</li><li>metaWeblog.editPost (postid, username, password, struct, publish) returns true &#x2013; Edit existing post
+</li><li>metaWeblog.getPost (postid, username, password) returns struct &#x2013; Returns existing post
+</li><li>metaWeblog.getCategories (blogid, username, password) returns struct &#x2013; Returns blog categories
+</li><li><a></a>metaWeblog.getRecentPosts (blogid, username, password, numberOfPosts) returns array of structs &#x2013; Return recent posts
+</li><li><a></a>metaWeblog.newMediaObject (blogid, username, password, struct) returns struct &#x2013; Add new media object to post</li>
+</ul>
+<p>When I started coding and testing this interface I found that Windows Live Writer called blogger.getUsersBlogs and blogger.deletePost methods which actually defined in Blogger API. I defined these methods with appropriate XmlRPcMethod attributes&#xA0;in my blogger class and start coding: Below you can find skeleton of my blogger class:</p>
+<pre><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">using</span> System;
+
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">using</span> System.Web;
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">using</span> CookComputing.XmlRpc;
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">using</span> System.Xml;
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">using</span> System.Xml.Xsl;
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">using</span> System.Xml.XPath;
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">using</span> System.Collections.Generic;
+
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">using</span> System.IO;
+
+[XmlRpcService(
+    Name <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">=</span> <span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;blogger&quot;</span>,
+    Description <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">=</span> <span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;This is a sample XML-RPC service illustrating method calls with simple parameters and return type.&quot;</span>,
+    AutoDocumentation <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">=</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">true</span>)]
+[XmlRpcUrl(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;http://gtrifonov.azurewebsites.net/MetaBlogApi.ashx&quot;</span>)]
+
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">class</span> blogger : XmlRpcService
+{
+
+
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;blogger.getUsersBlogs&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> XmlRpcStruct[] getUsersBlogs(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> appKey, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password)
+    {
+        ....
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">return</span> struct;
+    }
+
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;metaWeblog.setTemplate&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">bool</span> setTemplate(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> appKey, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> blogid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> template, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span>   templateType)
+    {
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">return</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">true</span>;
+    }
+
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;metaWeblog.getCategories&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> XmlRpcStruct[] getCategories(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> blogid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password)
+    {
+        XmlRpcStruct rpcstruct <span style="font-size: 11px; color: red; font-family: courier new; background-color: white">=</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: white">new</span> XmlRpcStruct();
+
+        rpcstruct.Add(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #ededed">&quot;description&quot;</span>, <span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #ededed">&quot;description&quot;</span>);
+        rpcstruct.Add(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #ededed">&quot;categoryid&quot;</span>, <span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #ededed">&quot;123&quot;</span>);
+        rpcstruct.Add(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #ededed">&quot;title&quot;</span>, <span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #ededed">&quot;title&quot;</span>);
+
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: white">return</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: white">new</span> XmlRpcStruct[] { rpcstruct };
+    }
+
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;metaWeblog.getRecentPosts&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> XmlRpcStruct[] getRecentPosts(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> blogid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password,<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">int</span> numberOfPosts)
+    {
+        XmlRpcStruct[] posts <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">=</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">new</span> XmlRpcStruct[5];
+       .......
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">return</span> posts;
+    }
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;metaWeblog.getTemplate&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> getTemplate(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> appKey, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> blogid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> templateType)
+    {
+        .....................
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">return</span> id;
+    }
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;metaWeblog.editPost&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">bool</span> editPost(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> postid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password, XmlRpcStruct rpcstruct, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">bool</span> publish)
+    {
+        ..................
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">return</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">true</span>;
+    }
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;metaWeblog.getPost&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> XmlRpcStruct getPost(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> postid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password)
+    {
+       ..................
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">return</span> rpcstruct;
+    }
+
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;blogger.deletePost&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">bool</span> deletePost(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> appKey, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> postid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">bool</span> publish)
+    {
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">return</span> <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">false</span>;
+
+    }
+    [XmlRpcMethod(<span style="font-size: 11px; color: #666666; font-family: courier new; background-color: #e4e4e4">&quot;metaWeblog.newMediaObject&quot;</span>)]
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">public</span> XmlRpcStruct newMediaObject(<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> blogid, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> username, <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">string</span> password, XmlRpcStruct rpcstruct)
+    {
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">bool</span> allowed <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">=</span> System.Web.Security.FormsAuthentication.Authenticate(username, password);
+
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">return</span> rstruct;
+    }
+
+}</pre>
+<p><strong>Issues:</strong></p>
+<p>After defining all methods and adding basic functionality I figure out that Windows Live Writer not using getTemplate and setTemplate method and trying to detect your blog appearance by connecting to blog site and downloading content. It&#x2019;s strange because these methods were designed especially for this. </p>
+<p>Also I found that in xml-rpc&#xA0;RFS documentation method getRecentPosts returns struct with array of posts, but Windows Live Writer expecting to receive array of structs. </p>
+<p>If you tried coding method getCategories looking only to RFS it will not work with Windows Live Writer, because writer expecting categoryid as one of structure member. Thanks to Wiktor for his <a href="http://www.wictorwilen.se/Post/131.aspx&apos;, &apos;post&apos;);">post</a> with example of how to avoid this issue and example of working structure.&#xA0;</p>
+<pre><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;?</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">xml</span> <span style="font-size: 11px; color: red; font-family: courier new; background-color: transparent">version</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">=&quot;1.0&quot;</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">?&gt;</span>
+  <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">methodResponse</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+    <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">params</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+      <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">param</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+          <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">array</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+            <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">data</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+              <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">struct</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                 <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">member</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                   <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">name</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>categoryid<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">name</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                   <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>1<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                 <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">member</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                 <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">member</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                   <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">name</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>title<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">name</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                   <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>Category 1<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                 <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">member</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                 <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">member</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                   <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">name</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>description<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">name</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                   <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>Description <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+                 <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">member</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+	        <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">struct</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+             <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+           <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">data</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+         <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">array</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+       <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">value</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+     <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">param</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+ <span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">params</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span>
+<span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&lt;/</span><span style="font-size: 11px; color: maroon; font-family: courier new; background-color: transparent">methodResponse</span><span style="font-size: 11px; color: blue; font-family: courier new; background-color: transparent">&gt;</span></pre>
+<p>I hope issue with template methods and categories will be solved in next <a href="http://windowslivewriter.spaces.live.com/&apos;, &apos;Windows Live Writer&apos;);">Windows Live Writer</a>&#xA0;beta releases.</p>
+<p><a href="http://gtrifonov.azurewebsites.net/Code/MetaBlogAPI.zip&apos;);">Download MetaWeblog API example (C#)</a></p>
+<p><strong>References:</strong></p>
+<ul>
+<li><a href="http://www.xmlrpc.com/metaWeblogApi&apos;, &apos;RFC: MetaWeblog API&apos;);">RFC: MetaWeblog API</a>
+</li><li><a href="http://www.xml-rpc.net/&apos;, &apos;XML-RPC.NET&apos;);">XML-RPC.NET</a>
+</li><li><a href="http://windowslivewriter.spaces.live.com/&apos;, &apos;Windows Live Writer&apos;);">Windows Live Writer</a></li>
+</ul>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

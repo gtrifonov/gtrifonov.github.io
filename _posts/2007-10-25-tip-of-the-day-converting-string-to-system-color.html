@@ -1,0 +1,21 @@
+---
+layout: post
+title: "Tip Of the Day – Converting string to System.Color "
+slug: 2007-10-25-tip-of-the-day-converting-string-to-system-color
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p></p>
+<div>Hi I&#x2019;d like to start publishing &#x201C;c# tip&#x2019;s of the day&#x201D; posts which will contain small&#xA0;trivial(or may be not) C# snippets which&#xA0;searched or looked today.</div>
+<div>&#xA0;</div>
+<div>Today&#x2019;s tip will be&#xA0; &#x2013; how to parse Color from HEX string. Hex colors are commonly user in web css styles and System.Color didn&#x2019;t provide direct access to method allowing to parse color from string.</div>
+<div>&#xA0;</div>
+<div>
+<div style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &apos;Courier New&apos;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none">
+<pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &apos;Courier New&apos;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   1:</span> <span style="color: #0000ff">string</span> xCol = <span style="color: #006080">&quot;#FF00DD&quot;</span>;</pre>
+<pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &apos;Courier New&apos;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #606060">   2:</span> Color c = System.Drawing.ColorTranslator.FromHtml(xCol);</pre>
+</div>
+</div>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

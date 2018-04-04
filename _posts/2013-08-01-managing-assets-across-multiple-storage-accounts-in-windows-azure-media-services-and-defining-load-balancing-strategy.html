@@ -1,0 +1,85 @@
+---
+layout: post
+title: "Managing assets across multiple storage accounts In Windows Azure Media Services and defining load balancing strategy "
+slug: 2013-08-01-managing-assets-across-multiple-storage-accounts-in-windows-azure-media-services-and-defining-load-balancing-strategy
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>In Windows Azure Media Services 2.2 we introduced concept of associating multiple windows azure storage accounts with media service account. </p>
+<p>Main purpose of this feature is to enable users to scale their assets across multiple storage accounts to overcome azure storage max limit of 200TB.</p>
+<p>In this article i will demonstrate how to create simple load balancing strategy for asset creation to place asset into storage account with least occupied space. Most of examples will cover Windows Azure Media Services .NET SDK which can be installed as Nuget Package. See <a href="http://bit.ly/1chUG2O</a></p>
+<p>&#xA0;</p>
+<p>&#xA0;</p>
+<h4>Before we jump into code let&#x2019;s explore few concepts:</h4>
+<p>When you creating Windows Azure Media Service through portal or management api you specifying your default storage account:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/SNAGHTMLa27bb77_thumb1.png" width="1180" height="813"></a></p>
+<p>&#xA0;</p>
+<p>Once your account is created you will be able to see information about your default storage account associated with media service account in .NET client SDK and list through all associated accounts:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/image_thumb9.png" width="728" height="201"></a> </p>
+<p></p>
+<p>&#xA0;</p>
+<p>As you can see interface exposes just name and IsDefaultProperty. You can use azure storage sdk to get more information about account itself.</p>
+<p>In order to link additional accounts you can utilize azure management rest api : <a href="http://msdn.microsoft.com/en-us/library/windowsazure/dn313102.aspx</a></p>
+<p>When you creating your asset you can pass IStorageAccount as parameter to asset create method and system will create asset within selected storage account:</p>
+<pre class="csharpcode">context.Assets.Create(<span class="str">&quot;MyAsset&quot;</span>, <span class="str">&quot;storageAccountName&quot;</span>, AssetCreationOptions.None);</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>&#xA0;</p>
+<h4>Implementing asset load balancing strategy across storage accounts</h4>
+<p>Since multiple storage accounts feature in Media Services has been introduced to overcome limit of 2TB storage there are few potential ways you can select storage accounts:</p>
+<p>&#xA0;</p>
+<ul>
+<li>Red Robin selection</li>
+<li>Select account with least occupied space</li>
+<li>Once first account reaches certain space threshold, start creating asset in the next account from list</li>
+</ul>
+<p>&#xA0;</p>
+<p>Let&#x2019;s pick up second strategy from a list to select account with least amount of occupied space.</p>
+<p>&#xA0;</p>
+<p>Internally you need to map IStorageAccount from Media Services SDK to appropriate CloudStorageAccount from Azure Storage SDK:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/image_thumb10.png" width="1022" height="59"></a> </p>
+<p>Then implement selection strategy we need to make sure that we have storage account metrics data. By default storage analytics data is disabled and you have to enable it for a given storage account.</p>
+<p>It can be done by calling storage sdk:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/image_thumb7.png" width="684" height="211"></a> </p>
+<p>&#xA0;</p>
+<p>Once analytic feature has been enable Windows Azure will create table $MetricsCapacityBlob in your storage account and will start writing daily metrics there. Please not that this data is available within 24 hours.</p>
+<p>To read data from table you can use following snippet:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/image_thumb8.png" width="1215" height="595"></a> </p>
+<p></p>
+<p>&#xA0;</p>
+<p>Once you get data Metrics for your account it just a matter of applying required logic:</p>
+<p>If you looked into <a href="http://web.archive.org/web/20171009154944/https://github.com/WindowsAzure/azure-sdk-for-media-services/tree/dev/samples/Windows%20Azure%20Media%20Services%20.NET%20SDK%20Sample/C%23/Selecting%20Storage%20Account%20Based%20On%20Capacity/AccountLoadBalancing&apos;, &apos;AccountLoadBalancing&apos;);">AccountLoadBalancing</a> /<strong>LeastCapacityOrDefaultAccountStrategy.cs</strong> file&#xA0; you will find that for a given list of accounts i am reading available analytics data and performing following algorithm:</p>
+<ol>
+<li> If account doesn&#x2019;t have analytics data for last 2 days then it is not participating in selection</li>
+<li>If account has analytics data and storage capacity of account is least among other accounts then account is selected.</li>
+</ol>
+<p>&#xA0;</p>
+<p>You can find sample solution by going to <a href="http://bit.ly/1chUG2O</a></p>
+<p>Your final usage will look similar to this:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/image_thumb11.png" width="1186" height="575"></a></p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/media-services/" rel="tag">media services</a></p><hr>
+ 

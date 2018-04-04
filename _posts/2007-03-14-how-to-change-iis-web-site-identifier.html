@@ -1,0 +1,22 @@
+---
+layout: post
+title: "How to change IIS web site identifier "
+slug: 2007-03-14-how-to-change-iis-web-site-identifier
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p></p>
+<p>Below &#xA0;you can find a little How to if are getting problem with current iis identifiers.
+</p><p>For example you have&#xA0;&#xA0;2 web&#xA0;sites installed on your local IIS&#xA0;:
+</p><ul>
+<li>SampleIISApplication1&#xA0;with identifier = 1
+</li><li>SampleIISApplication2&#xA0;with identifier = 2</li>
+</ul>
+<p>For some reason you need &#xA0;SampleApplication1 to use identifier 2 </p>
+<p>Do following step to change SampleIISApplication1&#xA0; identifier to some other value:
+</p><p><font color="#0000ff">CSCRIPT %SYSTEMDRIVE%\Inetpub\AdminScripts\adsutil.vbs STOP_SERVER W3SVC/1<br></font><font color="#0000ff">CSCRIPT %SYSTEMDRIVE%\Inetpub\AdminScripts\adsutil.vbs MOVE W3SVC/1 W3SVC/11<br>CSCRIPT %SYSTEMDRIVE%\Inetpub\AdminScripts\adsutil.vbs START_SERVER W3SVC/11</font></p>
+<p>To update SampleIISApplication2&#xA0;idetifier to 1:
+</p><p><font color="#0000ff">CSCRIPT %SYSTEMDRIVE%\Inetpub\AdminScripts\adsutil.vbs STOP_SERVER W3SVC/1<br>CSCRIPT %SYSTEMDRIVE%\Inetpub\AdminScripts\adsutil.vbs MOVE W3SVC/1 W3SVC/2 <br></font><font color="#0000ff">CSCRIPT %SYSTEMDRIVE%\Inetpub\AdminScripts\adsutil.vbs START_SERVER W3SVC/2</font></p>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

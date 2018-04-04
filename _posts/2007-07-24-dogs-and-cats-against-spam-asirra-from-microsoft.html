@@ -1,0 +1,49 @@
+---
+layout: post
+title: "Dogs and Cats against spam -Asirra from Microsoft "
+slug: 2007-07-24-dogs-and-cats-against-spam-asirra-from-microsoft
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>The idea of Captchas are pretty old. You can find a lot of information about them visiting <a href="http://sam.zoy.org/pwntcha/</a>&#xA0;. </p>
+<p>So I spend several hours developing captcha following &#xA0;recommendations i found&#xA0;on <a href="http://www.brains-n-brawn.com/default.aspx?vDir=aicaptcha</a>&#xA0;:</p>
+<li>render the characters with different colors
+</li><li>make some characters darker than the background, and some lighter
+</li><li>use gradient colors for the backgrounds and the characters
+</li><li>don&#x2019;t align all the characters vertically
+</li><li>don&#x2019;t make the answers words, so that a dictionary could be used
+</li><li>use more characters and symbols
+</li><li>use uppercase and lowercase characters
+</li><li>use a different number of characters each time
+</li><li>rotate some of the characters more drastically (i.e. upside down)
+</li><li>do more overlapping of characters
+</li><li>make some pixels of&#xA0;a single&#xA0;character not touching
+</li><li>have grid lines that cross over the characters with their same color
+</li><li>consider asking natural language questions
+<p>&#xA0;</p>
+<p>Next day I was found link to Microsoft project &#x2013; Assira. <br>The main idea it can&#x2019;t be decoded because it required human to make proper choice to filter dos,from cats photos.</p>
+<p>&#x201C;<b>Asirra</b> (Animal Species Image Recognition for Restricting Access) is a HIP that works by asking users to identify photographs of cats and dogs. This task difficult for computers, but our user studies have shown that people can accomplish it quickly and accurately&#x201D;</p>
+<p>Millions of pictures feeded to system make it impossible for bots to filter cats from dogs. And it add a lot of fun comparing boring process of character recognition.</p>
+<p>&#xA0;</p>
+<p>Probably I will replace my home made captcha with this service, because my hosting provider not allowing to deploy unsafe dll which required for some image filters(i removed them to make safe compilation). </p>
+<p>Main advantage to developer form Asirra, that </p>
+<ul>
+<li>free service
+</li><li>no additional components to be host
+</li><li>easy integration with existing forms</li>
+</ul>
+<p>To integrate Azirra to your page you need to:</p>
+<ol>
+<li>Place javascript link to your page <br><code><font color="#0000ff">&lt;script type=&quot;text/javascript&quot; src=&quot;http://challenge.asirra.com/js/AsirraClientSide.js&quot;&gt;&lt;/script&gt;</font></code>
+</li><li><code>Attach javascript to onclick event of your button <br><code><font color="#0000ff">onclick=&quot;javascript:Asirra_CheckIfHuman(HumanCheckComplete)&quot; <br></font><font color="#000000">where HumanCheckComplete </font></code></code><code><code>is your form submit function <br></code></code>
+<p><code>&lt;script type=&quot;text/javascript&quot;&gt;<br>function HumanCheckComplete(isHuman)<br>{<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if (isHuman)<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;formElt = document.getElementById(&quot;mainForm&quot;);<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;formElt.submit();<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;else<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;alert(&quot;Please correctly identify the cats.&quot;);<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return false;<br>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br>}<br>&lt;/script&gt;</code></p>
+<p><code>After steps above hidden field <tt>Asirra_Ticket</tt> will be created and value from this field will be in posted form data</code></p>
+<p><code>You need to read this value and call AzirraService&#xA0;</code><code><code><a href="http://challenge.asirra.com/cgi/Asirra?action=ValidateTicket&amp;ticket=AzirraTicketValue</a></code></code></p>
+<p><code><code></code></code>&#xA0;</p>
+<p><code><code>For more examples please visit <a href="http://research.microsoft.com/asirra/installation.aspx</a></code></code></p>
+</li>
+</ol>
+</li>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

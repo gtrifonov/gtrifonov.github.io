@@ -1,0 +1,204 @@
+---
+layout: post
+title: "ASP.NET Routing performance compare to HttpHandler "
+slug: 2009-03-04-asp-net-routing-performance-compare-to-httphandler
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Hi few days ago I was experimenting with some new ASP.NET features and want to share some small perf measures to understand how ASP.NET routing affect throughput compare to simple&#xA0; ASP.NET handler.</p>
+<p>If you curious about what it is ASP.NET routing ,here a list of couple of articles:</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/cc668201.aspx</a></p>
+<p><a href="http://weblogs.asp.net/scottgu/archive/2007/12/03/asp-net-mvc-framework-part-2-url-routing.aspx</a></p>
+<h3>&#xA0;</h3>
+<h3>Test environment and scenarios:</h3>
+<p>1. Request to simple JS</p>
+<p>2. Request to handler which doing Response.Write</p>
+<p>3. Request to URL which trigger Route Mapping and execution of Routing handler</p>
+<p></p>
+<p>1 Test Agent</p>
+<p></p>
+<h3>&#xA0;</h3>
+<h3>Code:</h3>
+<p>Scenario 2&#xA0; &#x2013; Simple ASP.NET handler:</p>
+<div class="csharpcode">
+<pre><span class="lnum">   1:  </span><span class="kwrd">using</span> System;</pre>
+<pre><span class="lnum">   2:  </span><span class="kwrd">using</span> System.Collections.Generic;</pre>
+<pre><span class="lnum">   3:  </span><span class="kwrd">using</span> System.Linq;</pre>
+<pre><span class="lnum">   4:  </span><span class="kwrd">using</span> System.Web;</pre>
+<pre><span class="lnum">   5:  </span>&#xA0;</pre>
+<pre><span class="lnum">   6:  </span><span class="kwrd">namespace</span> TestRouting</pre>
+<pre><span class="lnum">   7:  </span>{</pre>
+<pre><span class="lnum">   8:  </span>    <span class="rem">/// &lt;summary&gt;</span></pre>
+<pre><span class="lnum">   9:  </span>    <span class="rem">/// Summary description for SimpleHandler</span></pre>
+<pre><span class="lnum">  10:  </span>    <span class="rem">/// &lt;/summary&gt;</span></pre>
+<pre><span class="lnum">  11:  </span>    <span class="kwrd">public</span> <span class="kwrd">class</span> SimpleHandler : IHttpHandler</pre>
+<pre><span class="lnum">  12:  </span>    {</pre>
+<pre><span class="lnum">  13:  </span>        <span class="kwrd">public</span> SimpleHandler()</pre>
+<pre><span class="lnum">  14:  </span>        {</pre>
+<pre><span class="lnum">  15:  </span>            <span class="rem">//</span></pre>
+<pre><span class="lnum">  16:  </span>            <span class="rem">// TODO: Add constructor logic here</span></pre>
+<pre><span class="lnum">  17:  </span>            <span class="rem">//</span></pre>
+<pre><span class="lnum">  18:  </span>        }</pre>
+<pre><span class="lnum">  19:  </span>&#xA0;</pre>
+<pre><span class="lnum">  20:  </span>        <span class="preproc">#region</span> IHttpHandler Members</pre>
+<pre><span class="lnum">  21:  </span>&#xA0;</pre>
+<pre><span class="lnum">  22:  </span>        <span class="kwrd">public</span> <span class="kwrd">bool</span> IsReusable</pre>
+<pre><span class="lnum">  23:  </span>        {</pre>
+<pre><span class="lnum">  24:  </span>            get { <span class="kwrd">throw</span> <span class="kwrd">new</span> NotImplementedException(); }</pre>
+<pre><span class="lnum">  25:  </span>        }</pre>
+<pre><span class="lnum">  26:  </span>&#xA0;</pre>
+<pre><span class="lnum">  27:  </span>        <span class="kwrd">public</span> <span class="kwrd">void</span> ProcessRequest(HttpContext context)</pre>
+<pre><span class="lnum">  28:  </span>        {</pre>
+<pre><span class="lnum">  29:  </span>            context.Response.Write(<span class="str">&quot;var i = &apos;Simple Handler Response.Write&apos;;&quot;</span>);</pre>
+<pre><span class="lnum">  30:  </span>            context.Response.End();</pre>
+<pre><span class="lnum">  31:  </span>        }</pre>
+<pre><span class="lnum">  32:  </span>&#xA0;</pre>
+<pre><span class="lnum">  33:  </span>        <span class="preproc">#endregion</span></pre>
+<pre><span class="lnum">  34:  </span>    }</pre>
+<pre><span class="lnum">  35:  </span>}</pre>
+</div>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<h4>Scenario 3&#xA0;&#xA0; &#x2013; ASP.NET Routing:</h4>
+<p>Routing initialization in global.asax:</p>
+<div class="csharpcode">
+<pre><span class="lnum">   1:  </span>&lt;%@ Application Language=<span class="str">&quot;C#&quot;</span> %&gt; </pre>
+<pre><span class="lnum">   2:  </span>&lt;%@ Import Namespace=<span class="str">&quot;System.Web.Routing&quot;</span> %&gt; </pre>
+<pre><span class="lnum">   3:  </span>&lt;%@ Import Namespace=<span class="str">&quot;TestRouting&quot;</span> %&gt; </pre>
+<pre><span class="lnum">   4:  </span>&#xA0;</pre>
+<pre><span class="lnum">   5:  </span>&lt;script runat=<span class="str">&quot;server&quot;</span>&gt; </pre>
+<pre><span class="lnum">   6:  </span>&#xA0;</pre>
+<pre><span class="lnum">   7:  </span>    <span class="kwrd">void</span> Application_Start(<span class="kwrd">object</span> sender, EventArgs e) </pre>
+<pre><span class="lnum">   8:  </span>    { </pre>
+<pre><span class="lnum">   9:  </span>        RegisterRoutes(RouteTable.Routes); </pre>
+<pre><span class="lnum">  10:  </span>    } </pre>
+<pre><span class="lnum">  11:  </span>&#xA0;</pre>
+<pre><span class="lnum">  12:  </span>    <span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">void</span> RegisterRoutes(RouteCollection routes) </pre>
+<pre><span class="lnum">  13:  </span>    { </pre>
+<pre><span class="lnum">  14:  </span>        RouteTable.Routes.Add( </pre>
+<pre><span class="lnum">  15:  </span>                 <span class="kwrd">new</span> Route(<span class="str">&quot;test/{name}/view.aspx&quot;</span>, <span class="kwrd">new</span> CustomRouteHandler())); </pre>
+<pre><span class="lnum">  16:  </span>    }</pre>
+</div>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<p>Route implementation</p>
+<div class="csharpcode">
+<pre><span class="lnum">   1:  </span><span class="kwrd">using</span> System;</pre>
+<pre><span class="lnum">   2:  </span><span class="kwrd">using</span> System.Web;</pre>
+<pre><span class="lnum">   3:  </span><span class="kwrd">using</span> System.Web.Routing;</pre>
+<pre><span class="lnum">   4:  </span><span class="kwrd">using</span> System.Web.UI;</pre>
+<pre><span class="lnum">   5:  </span><span class="kwrd">using</span> System.Web.UI.WebControls;</pre>
+<pre><span class="lnum">   6:  </span><span class="kwrd">using</span> System.Web.Compilation;</pre>
+<pre><span class="lnum">   7:  </span>&#xA0;</pre>
+<pre><span class="lnum">   8:  </span>&#xA0;</pre>
+<pre><span class="lnum">   9:  </span><span class="kwrd">namespace</span> TestRouting</pre>
+<pre><span class="lnum">  10:  </span>{</pre>
+<pre><span class="lnum">  11:  </span>    <span class="rem">/// &lt;summary&gt;</span></pre>
+<pre><span class="lnum">  12:  </span>    <span class="rem">/// Summary description for CustomRouteHandler</span></pre>
+<pre><span class="lnum">  13:  </span>    <span class="rem">/// &lt;/summary&gt;</span></pre>
+<pre><span class="lnum">  14:  </span>    <span class="kwrd">public</span> <span class="kwrd">class</span> CustomRouteHandler : IRouteHandler</pre>
+<pre><span class="lnum">  15:  </span>    {</pre>
+<pre><span class="lnum">  16:  </span>        <span class="kwrd">public</span> CustomRouteHandler()</pre>
+<pre><span class="lnum">  17:  </span>        {</pre>
+<pre><span class="lnum">  18:  </span>            <span class="rem">//this.VirtualPath = virtualPath;</span></pre>
+<pre><span class="lnum">  19:  </span>        }</pre>
+<pre><span class="lnum">  20:  </span>&#xA0;</pre>
+<pre><span class="lnum">  21:  </span>        <span class="rem">//public string VirtualPath { get; private set; }</span></pre>
+<pre><span class="lnum">  22:  </span>&#xA0;</pre>
+<pre><span class="lnum">  23:  </span>        <span class="kwrd">public</span> IHttpHandler GetHttpHandler(RequestContext</pre>
+<pre><span class="lnum">  24:  </span>              requestContext)</pre>
+<pre><span class="lnum">  25:  </span>        {</pre>
+<pre><span class="lnum">  26:  </span>            var page = <span class="kwrd">new</span> Page();</pre>
+<pre><span class="lnum">  27:  </span>            requestContext.HttpContext.Response.Write(<span class="str">&quot;var i = &apos;Response.Write&apos;;&quot;</span>);</pre>
+<pre><span class="lnum">  28:  </span>            requestContext.HttpContext.Response.End();</pre>
+<pre><span class="lnum">  29:  </span>            <span class="kwrd">return</span> page;</pre>
+<pre><span class="lnum">  30:  </span>        }</pre>
+<pre><span class="lnum">  31:  </span>    }</pre>
+<pre><span class="lnum">  32:  </span>}</pre>
+</div>
+<style type="text/css">
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+<p><b>Some takeaways:</b></p>
+<p>I expected that throughput for asp.net routing will have less throughput, because call execution time is longer due to extra module, but was disappointed that it x/3 number compare to simple handler.</p>
+<p>I found strange that simple handler test showed better results compare to static JS file, but numbers are very close to each other so I am not considering them as reason to disregard other results.</p>
+<p>If you thinking about&#xA0; url rewriting and don&#x2019;t need dynamic configuration probably you will archive better results using built in support of url rewriting in IIS 7.0</p>
+<p><a href="http://learn.iis.net/page.aspx/496/iis-url-rewriting-and-aspnet-routing/</a></p>
+<p><b>Scenario results:</b></p>
+<p>Scenario 1:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/windowslivewriter/764d4953de50_C947/image_thumb.png" width="796" border="0"></a> </p>
+<p>Scenario 2:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/windowslivewriter/764d4953de50_C947/image_thumb_1.png" width="821" border="0"></a> </p>
+<p>Scenario 3:</p>
+<p><a href="http://gtrifonov.azurewebsites.net/windowslivewriter/764d4953de50_C947/image_thumb_2.png" width="818" border="0"></a></p>
+<div style="float: right; margin-left: 10px;"><a href="http://platform.twitter.com/widgets.js"></script></div>            <hr>
+ 

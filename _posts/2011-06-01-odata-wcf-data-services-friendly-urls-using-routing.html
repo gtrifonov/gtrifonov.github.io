@@ -1,0 +1,18 @@
+---
+layout: post
+title: "ODATA WCF Data Services Friendly URLS using Routing "
+slug: 2011-06-01-odata-wcf-data-services-friendly-urls-using-routing
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>When you creating your first OData WCF Data service common tasks is to give a friendly URL instead of using filename.svc as entry point.You can archive it with URL routing feature in ASP.NET MVC.Just modify your Global.asax.cs route registration block to include following lines.</p>
+<pre class="code"><span style="color: blue">public static void </span>RegisterRoutes(<span style="color: #2b91af">RouteCollection </span>routes)
+       {
+           routes.Clear();
+           <span style="color: blue">var </span>factory = <span style="color: blue">new </span><span style="color: #2b91af">DataServiceHostFactory</span>();
+           <span style="color: #2b91af">RouteTable</span>.Routes.Add(
+               <span style="color: blue">new </span><span style="color: #2b91af">ServiceRoute</span>(<span style="color: #a31515">&quot;API&quot;</span>, factory, <span style="color: blue">typeof </span>(<span style="color: red">TestOdataService</span>)));</pre>
+<p>It tells system to associate data service factory handler with a given URL.</p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/wcf/" rel="tag">WCF</a></p><hr>
+ 

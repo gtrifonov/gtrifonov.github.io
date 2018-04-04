@@ -1,0 +1,303 @@
+---
+layout: post
+title: "Windows Azure Powershell for Media Services "
+slug: 2013-08-24-how-to-use-windows-azure-powershell-for-media-services
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Yesterday we published first set of powershell cmdlets to help manage Windows Azure Media Services. In this article I want give quick overview of what first set of media services related cmdlets are covering.</p>
+<p>Before going into details I&#x2019;d like to list set of cmdlets we shipped:</p>
+<ul>
+<li>New-AzureMediaServicesAccount  </li>
+<li>New-AzureMediaServicesKey  </li>
+<li>Get-AzureMediaServicesAccount  </li>
+<li>Remove-AzureMediaServicesAccount</li>
+</ul>
+<p>&#xA0;</p>
+<h3>Installing&#xA0; Windows Azure Powershell </h3>
+<p>The recommended way to install the Windows Azure PowerShell cmdlets is via the <a href="http://go.microsoft.com/fwlink/?linkid=253447&amp;clcid=0x409&apos;, &apos;Microsoft Web Platform Installer&apos;);">Microsoft Web Platform Installer</a>. After installing and launching the Web Platform Installer, select <strong>Windows Azure PowerShell</strong> and follow the prompts to install the cmdlets. The Web Platform Installer will install all dependencies for the Windows Azure PowerShell cmdlets<br>.</p>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/windowsazurepowershellmediaservices_thumb.png" width="621" height="388"></a></p>
+<p>&#xA0;</p>
+<p>Alternatively you can get latest from github and build project.You can details instructions visiting <a href="http://web.archive.org/web/20170504101727/https://github.com/WindowsAzure/azure-sdk-tools/wiki/Windows-Azure-PowerShell-Developer-Guide&apos;);">https://github.com/WindowsAzure/azure-sdk-tools/wiki/Windows-Azure-PowerShell-Developer-Guide</a></p>
+<h3>Import Publisher setting file and selecting subscription to work with</h3>
+<p>Before you can deploy applications by using a PowerShell cmdlet, you must download your subscription information (by using <strong>Get-AzurePublishSettingsFile</strong>) and then import those settings (by using <strong>Import-AzurePublishSettingsFile</strong>).After you done with installation next step will be to open powershell and import publisher settings for your azure subsriptions</p>
+<pre class="csharpcode">PS C:\&gt; Get-AzurePublishSettingsFile</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<pre class="csharpcode">PS C:\&gt; Import-AzurePublishSettingsFile -PublishSettingsFile&#xA0; &quot;C:\temp\George.publishsettings&quot;</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>Now powershell knows what subscription you have and you need to specify under which subscription you will work with media services.</p>
+<p>To get list of available subscriptions:</p>
+<pre class="csharpcode">PS C:\&gt; Get-AzureSubscription</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p>To select specific one:</p>
+<pre class="csharpcode">Select-AzureSubscription <span class="str">&quot;Windows Azure MSDN - Visual Studio Ultimate&quot;</span></pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<h3>Creating Windows Azure Media Service Account</h3>
+<p>To create new Azure Media Services Account use <strong>New-AzureMediaServicesAccount</strong>&#xA0; cmdlet providing name of account, datacenter location where it will be created and storage account name. Please note that storage account name should belong to same subscription where you creating media service account.</p>
+<p>Let me first get all list of mu\y storage names and pick one I want to use:</p>
+<p>&#xA0;</p>
+<pre class="csharpcode">PS C:\&gt; Get-AzureStorageAccount
+VERBOSE: 6:42:19 AM - Begin Operation: Get-AzureStorageAccount
+VERBOSE: 6:42:24 AM - Completed Operation: Get-AzureStorageAccount
+
+StorageAccountDescription :
+AffinityGroup             :
+Location                  : West US
+GeoReplicationEnabled     : True
+GeoPrimaryLocation        : West US
+GeoSecondaryLocation      :
+Label                     : trifonov1
+StorageAccountStatus      : Created
+StatusOfPrimary           :
+StatusOfSecondary         :
+Endpoints                 : {http:<span class="rem">//trifonov1.blob.core.windows.net/, http://trifonov1.queue.core.windows.net/,</span>
+                            http:<span class="rem">//trifonov1.table.core.windows.net/}</span>
+StorageAccountName        : trifonov1
+OperationDescription      : Get-AzureStorageAccount
+OperationId               : 3ca6e179-9dae-4585-9b43-fa79d14270da
+OperationStatus           : Succeeded
+
+</pre>
+<p><style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+</p>
+<p>Now when I know what account to pick I can provide storage account name ,location to <strong>New-AzureMediaServicesAccount</strong>&#xA0; cmdlet and also pick desired account name</p>
+<pre class="csharpcode">PS C:\&gt; New-AzureMediaServicesAccount -Name <span class="str">&quot;mymediademo&quot;</span> -StorageAccountName <span class="str">&quot;trifonov1&quot;</span> -Location <span class="str">&quot;West US&quot;</span>
+</pre>
+<p>&#xA0;</p>
+<h3>Get list of your Windows Azure Media Services accounts or details of selected one</h3>
+<p>Once you created single or multiple accounts you can list information by using <strong>Get-AzureMediaServicesAccount</strong> </p>
+<pre class="csharpcode">PS C:\&gt; Get-AzureMediaServicesAccount
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style></pre>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/SNAGHTML1c70bbc_thumb.png" width="969" height="141"></a></p>
+<p>By providing Name parameter you will get more detailed information including account keys</p>
+<pre class="csharpcode">PS C:\&gt; Get-AzureMediaServicesAccount -Name sprintdemo</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2013/08/SNAGHTML1ca6d0d_thumb.png" width="682" height="133"></a></p>
+<h3>&#xA0;</h3>
+<h3>Rotating Azure Media Service accounts keys</h3>
+<p>If you want update a account key you can use cmdlet <strong>New-AzureMediaServicesKey</strong> . <br>You need to provide account name, specify if you want to get new Primary or Secondary key . Specifying -Force switch will tell powershell not to ask confirmation question</p>
+<pre class="csharpcode">PS C:\&gt; New-AzureMediaServicesKey -Name <span class="str">&quot;sprintdemo&quot;</span> -KeyType <span class="str">&quot;Primary&quot;</span> -Force</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style>
+<h3>Deleting your account</h3>
+<p>Done experimenting with Azure Media Services simply execute </p>
+<pre class="csharpcode">PS C:\&gt; Remove-AzureMediaServicesAccount -Name <span class="str">&quot;sprintdemo&quot;</span> -Force</pre>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+</style><p></p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/powershell-2/" rel="tag">powershell</a></p><hr>
+ 
