@@ -1,6 +1,11 @@
-theme: minima
+title: "George Trifonov Blog"
+description: "Work, Coding, and Life"
+repository: gtrifonov/gtrifonov.github.io
 exclude: ["CNAME", "MIT-LICENSE", "README.md"]
 permalink: /:year/:month/:day/:slug/index.html
+theme: minima
 header_pages:
-- about.md
-repository: gtrifonov.github.io/gtrifonov.github.io
+  - about.md
+plugins:
+  - "jekyll-sitemap"
+  - "jekyll-github-metadata"
