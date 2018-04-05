@@ -10,6 +10,7 @@ header_pages:
 plugins:
   - "jekyll-sitemap"
   - "jekyll-github-metadata"
+  - "jekyll-redirect-from"
 disqus:
   shortname: "gtrifonov"
 twitter_username: geotrif
