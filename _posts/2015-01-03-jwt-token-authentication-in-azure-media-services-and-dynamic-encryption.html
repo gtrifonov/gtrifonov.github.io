@@ -1,0 +1,42 @@
+---
+layout: post
+title: "JWT token Authentication in Azure Media Services and Dynamic Encryption "
+slug: "jwt-token-authentication-in-azure-media-services-and-dynamic-encryption"
+---
+
+null
+   <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
+            <p>Starting from Azure Media Services .NET 4.5 &#xA0;SDK 3.1.0.0 release, Azure Media services team added functionality to use JWT token to restrict delivery of content keys. In this post&#xA0;I&#x2019;d like &#xA0;to demonstrate how to issue JWT token to be used in scenario when you want to stream dynamically encrypted content and content key requests have to be restricted.</p>
+<h2>Define who is going to get a content key:</h2>
+<p>In solutions utilizing Azure Media Services you can publish media content protected with AES encryption (envelope) or utilizing DRM technology such as Microsoft PlayReady. To play encrypted content, a video player has to obtain the content key in order to decrypt the media asset. .</p>
+<p>There are three ways to restrict delivery of content key :</p>
+<ul>
+<li>Not Restricted.Everyone can request a content key.</li>
+<li>IP restricted. Only http callers from specific range of ip addresses getting a key.</li>
+<li>Token restricted. Only callers who are passing valid token in Auth header or query string will get a content key.</li>
+</ul>
+<p>To get a content key that has a token restricted authorization policy, the player has to send a request to Azure Media Key Delivery service with JWT or SWT token. Azure Media Key Delivery service&#xA0;validates that token has been signed with proper key and performs validations of token claims defined in a system by service admin.<br>
+Before going into details how to construct a JWT token I wanted to walk through classes which you will be using&#xA0; to select that JWT token authentication enforced by key delivery service.</p>
+<pre><a href="http://web.archive.org/web/20170907120024/https://github.com/Azure/azure-sdk-for-media-services/blob/dev/src/net/Client/ContentKeyAuthorization/IContentKeyAuthorizationPolicy.cs&apos;, &apos;IContentKeyAuthorizationPolicy&apos;);" title="IContentKeyAuthorizationPolicy" target="_blank">IContentKeyAuthorizationPolicy</a></pre>
+<p>This class act as a container for set of access rules which you define in order to restrict delivery of content key. It has collection <a href="http://web.archive.org/web/20170907120024/https://github.com/Azure/azure-sdk-for-media-services/blob/dev/src/net/Client/ContentKeyAuthorization/IContentKeyAuthorizationPolicyOption.cs&apos;, &apos;IContentKeyAuthorizationPolicyOption&apos;);" title="IContentKeyAuthorizationPolicyOption">IContentKeyAuthorizationPolicyOption</a>&#xA0;you need to define.</p>
+<pre><a href="http://web.archive.org/web/20170907120024/https://github.com/Azure/azure-sdk-for-media-services/blob/dev/src/net/Client/ContentKeyAuthorization/IContentKeyAuthorizationPolicyOption.cs&apos;, &apos;IContentKeyAuthorizationPolicyOption&apos;);" title="IContentKeyAuthorizationPolicyOption" target="_blank">IContentKeyAuthorizationPolicyOption</a></pre>
+<p>Defines which protocol is used for key delivery</p>
+<ul>
+<li>BaselineHttp (Use MPEG Baseline HTTP key protocol.)</li>
+<li>PlayReadyLicense (Use PlayReady License acquisition protocol)</li>
+</ul>
+<p>and has&#xA0;&#xA0;<a href="http://msdn.microsoft.com/en-us/library/microsoft.windowsazure.mediaservices.client.contentkeyauthorization.icontentkeyauthorizationpolicyoption.restrictions(v=azure.10).aspx&apos;, &apos;IContentKeyAuthorizationPolicyOption.Restrictions&apos;);">IContentKeyAuthorizationPolicyOption.Restrictions</a> collectionof type&#xA0;ContentKeyAuthorizationPolicyRestriction . These policy restrictions are evaluated by key delivery service in order for a key to be served.</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/azure/microsoft.windowsazure.mediaservices.client.contentkeyauthorization.contentkeyauthorizationpolicyrestriction(v=azure.10).aspx&apos;, &apos;IContentKeyAuthorizationPolicyRestriction&apos;);">IContentKeyAuthorizationPolicyRestriction</a></p>
+<p>As I mentioned before there are 3 ways content key delivery can be restricted and you can define it&#xA0; by assigning on of values from ContentKeyRestrictionType enum to IContentKeyAuthorizationPolicyRestriction.KeyRestrictionType</p>
+<p><script src="http://web.archive.org/web/20170907120024js_/https://gist.github.com/gtrifonov/09fd2f98cfa4dc0a4a75.js"></script></p>
+<h2>Define how media asset will be delivered</h2>
+<p>Once we restricted delivery of content key, we have to instruct system how asset will be delivered. In our case we &#xA0;want to use dynamic encryption ,scenario when Azure Media streaming service dynamically encrypt content on a fly. &#xA0;You can read more about difference between dynamic and static encryption in Mingfei Yan post&#xA0;<a href="http://mingfeiy.com/dynamic-encryption-vs-static-encryption-azure-media-services&apos;, &apos;Dynamic Encryption vs. Static Encryption with Azure Media Services&apos;);" title="Permalink to Dynamic Encryption vs. Static Encryption with Azure Media Services" rel="bookmark">Dynamic Encryption vs. Static Encryption with Azure Media Services</a><br>
+In order to stream asset with dynamically encrypted you have to &#xA0;create&#xA0;IAssetDeliveryPolicy and associate it with media asset.</p>
+<p><script src="http://web.archive.org/web/20170907120024js_/https://gist.github.com/gtrifonov/8ad4bc517c8685e77ed6.js"></script></p>
+<h2>Issuing a JWT token and calling Azure Media Key Delivery Service</h2>
+<p>To issue a JWT token you can utilize <a href="http://web.archive.org/web/20170907120024js_/https://gist.github.com/gtrifonov/8fc4658eecd40a4c66ac.js"></script>Please note that in code snippet above i used a HttpClient to demo a call to a key delivery service. For a player to be able to stream assets encrypted with content keys that have a token restricted authorization policy, the player must be able to work with Auth headers in order to send key requests or to append JWT token as a url parameter: &amp;token=jwttokenValue</p>
+<h2>Using a JWT token within a video player</h2>
+<p>Once you generated a jwt token you can specify it as parameter for a player. For example below i am using<a href="http://web.archive.org/web/20170907120024js_/https://gist.github.com/gtrifonov/09aca4b1e4302d16da73.js"></script></p>
+<p>In a next blog post i will demo how to utilize Azure Active Directory to have role based access to your Azure Media services streamable content within OWIN based MVC App.</p>
+<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/key-delivery/" rel="tag">Key Delivery</a></p><hr>
+ 
