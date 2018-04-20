@@ -4,7 +4,7 @@ title: "IE7 – Waiting for message in status bar after all content has been ret
 slug: "ie7-waiting-for-message-in-status-bar-after-all-content-has-been-returned-by-flash-handler"
 ---
 
-null
+ 
    <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
             <p>Today I have very interesting bug related to status bar message&#xA0;&#xA0;in IE7. On pages I has three flash &lt;object&gt; tags with src pointing to web handler. Handler is&#xA0;returning flash&#xA0;binary data to be displayed with Response.BinaryWrite . But even after all flash movies have been displayed IE7 was stucked with message in status bar &#x201D; Waiting for http:// xyz&#xA0;&#xA0; 3 items remains&#x201D;. In FireFox same page working as designed.&#xA0;</p>
 <p>First I thought that something wrong with object tag or how I called handler. To my suprise problem was solved when I move all code from handler to empty aspx page. The difference in responce output was only in empty doctype,body ,html tags after binary data in responce.</p>

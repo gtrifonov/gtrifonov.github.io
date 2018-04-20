@@ -4,7 +4,7 @@ title: "Reseting local Windows Azure storage "
 slug: "reseting-local-windows-azure-storage"
 ---
 
-null
+ 
    <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
             <p>I run few days into a problem when I was not able to delete local development storage tables using Windows Azure API and system was throwing me exceptions. The reason of these exceptions I guess was the fact that table were very big.</p>
 <p>In basic scenarios resetting can be archived with Storage emulator UI.&#xA0; </p>
@@ -15,5 +15,3 @@ null
 <p><a href="http://gtrifonov.azurewebsites.net/wp-content/uploads/2011/06/clip_image0025_thumb.jpg" width="484" height="390"></a></p>
 <p>Killing services left azure tables as they were before.</p>
 <p>It turned out that you can also use %Azure SDK%\bin\devstore\dsinit.exe&#xA0; /forceCreate command , which worked perfectly for me.</p>
-<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/storage-emulator/" rel="tag">Storage Emulator</a></p><hr>
- 
