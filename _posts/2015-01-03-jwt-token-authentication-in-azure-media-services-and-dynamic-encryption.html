@@ -4,7 +4,7 @@ title: "JWT token Authentication in Azure Media Services and Dynamic Encryption 
 slug: "jwt-token-authentication-in-azure-media-services-and-dynamic-encryption"
 ---
 
-null
+ 
    <p class="meta"><span class="sep">Posted on </span><a href="http://gtrifonov.com/" title="View all posts by admin" rel="author">admin</a></span></span></p>
             <p>Starting from Azure Media Services .NET 4.5 &#xA0;SDK 3.1.0.0 release, Azure Media services team added functionality to use JWT token to restrict delivery of content keys. In this post&#xA0;I&#x2019;d like &#xA0;to demonstrate how to issue JWT token to be used in scenario when you want to stream dynamically encrypted content and content key requests have to be restricted.</p>
 <h2>Define who is going to get a content key:</h2>
@@ -38,5 +38,4 @@ In order to stream asset with dynamically encrypted you have to &#xA0;create&#xA
 <h2>Using a JWT token within a video player</h2>
 <p>Once you generated a jwt token you can specify it as parameter for a player. For example below i am using<a href="http://web.archive.org/web/20170907120024js_/https://gist.github.com/gtrifonov/09aca4b1e4302d16da73.js"></script></p>
 <p>In a next blog post i will demo how to utilize Azure Active Directory to have role based access to your Azure Media services streamable content within OWIN based MVC App.</p>
-<div style="float: right; margin-left: 10px;"><a href="http://gtrifonov.com/tag/key-delivery/" rel="tag">Key Delivery</a></p><hr>
- 
+

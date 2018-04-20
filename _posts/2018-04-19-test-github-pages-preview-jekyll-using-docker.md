@@ -21,7 +21,7 @@ Building and running container locally. Change docker-compose.yml file to insert
 
 Lookup logs locally and at this point you can preview your website locally
 
-> `docker logs gtrifonov.com --follow`
+> `docker logs {LOCAL_CONTAINER_NAME} --follow`
 
 Assuming you have your azure registry created this command will publish image. You don't need to rebuild image and publish image with every new blog post (git push)
 
