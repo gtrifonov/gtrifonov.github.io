@@ -25,16 +25,16 @@ Lookup logs locally and at this point you can preview your website locally
 
 Assuming you have your azure registry created this command will publish image. You don't need to rebuild image and publish image with every new blog post (git push)
 
-> `docker push gtrifonov.azurecr.io/jekyll-serve:latest`
+> `docker push {YOUR_REGISTRY_FQDN}/jekyll-serve:latest`
 
 Create container instance in azure
 
-> `az container create --resource-group {YOUR_RESOURCE_GROUP} --name blog --image gtrifonov.azurecr.io/jekyll-serve --cpu 1 --memory 1 --registry-username {YOUR_USERNAME} --registry-password {YOUR_PASSWORD} --dns-name-label {YOUR_SUBDOMAIN} --ports 80`
+> `az container create --resource-group {YOUR_RESOURCE_GROUP} --name {YOUR_CONTAINER_NAME} --image {YOUR_REGISTRY_FQDN}/jekyll-serve --cpu 1 --memory 1 --registry-username {YOUR_USERNAME} --registry-password {YOUR_PASSWORD} --dns-name-label {YOUR_SUBDOMAIN} --ports 80`
 
 See a staus of your container
 
-> ` az container logs --resource-group DefaultWestUs --name gtrifonovcom --follow`
+> ` az container logs --resource-group {YOUR_RESOURCE_GROUP} --name {YOUR_CONTAINER_NAME} --follow`
 
 Once testing is done you can delete container to free resources
 
-> `az container delete --resource-group {YOUR_RESOURCE_GROUP} --name gtrifonovcom`
+> `az container delete --resource-group {YOUR_RESOURCE_GROUP} --name {YOUR_CONTAINER_NAME}`
