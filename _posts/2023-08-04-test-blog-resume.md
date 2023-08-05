@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "GitHub Pages - test from long years of blogging pause"
-date:   2018-04-19 
-categories: jekyll docker azure
+date:   2023-08-04 
+categories: jekyll gitpages blogging
 ---
 ## Welcome back from years of blog silence.
 
