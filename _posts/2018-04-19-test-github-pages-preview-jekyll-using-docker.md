@@ -31,7 +31,7 @@ Create container instance in azure
 
 > `az container create --resource-group {YOUR_RESOURCE_GROUP} --name {YOUR_CONTAINER_NAME} --image {YOUR_REGISTRY_FQDN}/jekyll-serve --cpu 1 --memory 1 --registry-username {YOUR_USERNAME} --registry-password {YOUR_PASSWORD} --dns-name-label {YOUR_SUBDOMAIN} --ports 80`
 
-See a staus of your container
+See a status of your container
 
 > ` az container logs --resource-group {YOUR_RESOURCE_GROUP} --name {YOUR_CONTAINER_NAME} --follow`
 

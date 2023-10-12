@@ -1,7 +1,7 @@
 title: "George Trifonov Blog"
 description: "Work, Coding, and Life"
 repository: gtrifonov/gtrifonov.github.io
-exclude: ["CNAME", "MIT-LICENSE", "README.md", "Gemfile", "Gemfile.lock"]
+exclude: ["CNAME", "MIT-LICENSE", "README.md", "Gemfile", "Gemfile.lock","Dockerfile","docker-compose.yml"]
 permalink: /:year/:month/:day/:slug/index.html
 theme: minima
 paginate: 20
@@ -12,6 +12,7 @@ plugins:
   - "jekyll-sitemap"
   - "jekyll-github-metadata"
   - "jekyll-redirect-from"
+  - "jekyll-paginate"
 disqus:
   shortname: "gtrifonov"
 twitter_username: geotrif
