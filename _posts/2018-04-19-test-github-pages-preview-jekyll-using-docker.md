@@ -1,6 +1,8 @@
 ---
 layout: post
 title: "GitHub Pages - run Jekyll using Docker container and deploy it using Azure Container Instances"
+excerpt: "
+Recently i migrate my blog to github pages which using Jekyll engine under a hood to convert markdown files to html and generate static site. After 12 years of hosting blog,  i found that i don't really need any server side execution or storing any data inputs it dbs."
 date:   2018-04-19 
 categories: jekyll docker azure
 ---

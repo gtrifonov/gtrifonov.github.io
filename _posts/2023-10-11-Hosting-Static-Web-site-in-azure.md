@@ -4,6 +4,7 @@ title: "Hosting and deploying a static website to Azure. Using azure storage acc
 date:   2023-08-04 
 categories: azure hosting static websites blogging
 ---
+
 Before going into details of how to configure static web site in azure let's list why static web sites might be an option for your project.
 
 Benefits and Key Scenarios of Using Static Websites:

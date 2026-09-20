@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Running azure cli on Raspberry Pi using docker containers"
+excerpt: "Few days ago i was playing with my Pi 2 and wanted to execute Azure CLI commands to deploy some containers to Azure Container Registry. I knew i probably had to compile cli source code to target arm proccesor."
 ---
 
 Few days ago i was playing with my Pi 2 and wanted to execute [Azure CLI 2.0](https://github.com/Azure/azure-cli) commands to deploy some containers to Azure Container Registry. I knew i probably had to compile cli source code to target arm proccesor. 

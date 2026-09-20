@@ -1,15 +1,18 @@
 ---
 layout: post
 title: "Streamlining Your Coding Experience with VSCode.dev"
+excerpt: "What you gonna do when you don't have access to your computer but want to change couple lines of code in github repository using familiar vscode experience."
 date:   2023-08-04 
 categories: vscode remote codding websites blogging
 ---
 
-What you gonna do when you don't have access to your computer but want to change couple lines of code in github repository using familiar vscode experience. I found that browser based vscode.dev expreience often good enough to do basic tasks. and below is chatgpt article how you can do it. I need to save my library time since my session will expire in 15 minutes :)
+
+What you gonna do when you don't have access to your computer but want to change couple lines of code in github repository using familiar vscode experience. I found that browser based vscode.dev expreience often good enough to do basic tasks. and below is chatgpt article how you can do it. I need to save my library time since my session will expire in 15 minutes
+
 
 In the realm of coding, efficiency and accessibility are paramount. Developers are constantly seeking tools and features that streamline their workflow, enabling them to write better code in less time. One such tool that has garnered significant attention is VSCode.dev, a browser-based version of Visual Studio Code. This online platform empowers developers to seamlessly integrate external libraries into their projects directly from within the browser environment.
 
-### What is VSCode.dev?
+### **What is VSCode.dev?**
 
 VSCode.dev is a browser-based version of Visual Studio Code that provides a convenient interface for coding, collaborating, and managing projects entirely online. It offers many of the familiar features and functionalities of the desktop version of VSCode, allowing developers to code from anywhere with an internet connection.
 

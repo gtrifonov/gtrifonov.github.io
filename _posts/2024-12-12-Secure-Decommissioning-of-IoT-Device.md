@@ -5,9 +5,8 @@ date:   2024-12-12
 categories: IoT Security MXCHIP embedded best practices
 ---
 
-**Secure Decommissioning of IoT Devices: Lessons from Recycling my home MXChip Development Board project**
-
 The rise of IoT (Internet of Things) devices has revolutionized industries and personal lifestyles, making connectivity ubiquitous. However, the rapid proliferation of these devices also introduces significant security challenges, particularly during their decommissioning. Improper handling of IoT devices at the end of their lifecycle can expose sensitive data, create security vulnerabilities, and compromise user trust.
+
 
 This article examines a specific case: recycling MXChip IoT development boards. During this process, I discovered that even after reflashing the firmware, residual secrets, such as Wi-Fi credentials, remained accessible in the device’s non-volatile memory. I initially intended to donate a board for use in someone’s IoT project but found that the device still retained my Wi-Fi network name and password in memory. Alarmingly, even after reflashing, the board attempted to use these secrets to connect to my home network. This finding highlights the critical importance of implementing robust security hygiene for decommissioning IoT devices. Below, we explore best practices and technical strategies to ensure safe decommissioning.
 

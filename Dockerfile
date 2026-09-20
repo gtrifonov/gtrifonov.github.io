@@ -1,5 +1,5 @@
 # Use an official Ruby runtime as a parent image
-FROM ruby:2.7
+FROM ruby:3.3
 
 # Set the working directory in the container
 WORKDIR /app
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 4000
 
 # Start the Jekyll server
-CMD ["bundle", "exec", "jekyll", "serve"], "--host", "0.0.0.0"]
+CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0"]

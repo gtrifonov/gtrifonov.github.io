@@ -3,6 +3,8 @@ version: '2'
 services:
   jekyll:
     container_name: jekyll-serve
-    image: gtrifonov.azurecr.io/jekyll-serve
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - '4000:4000'

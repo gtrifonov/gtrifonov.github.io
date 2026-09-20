@@ -1,23 +1,21 @@
 title: "George Trifonov Blog"
-description: "Work, Coding, and Life"
+description: "Software development tips, tricks and tutorials"
+
+author: George Trifonov
+
 repository: gtrifonov/gtrifonov.github.io
 exclude: ["CNAME", "MIT-LICENSE", "README.md", "Gemfile", "Gemfile.lock","Dockerfile","docker-compose.yml"]
 permalink: /:year/:month/:day/:slug/index.html
+show_excerpts: true
 theme: minima
-paginate: 20
+paginate: 7
 include: ["/2015/04/22/azure-media-services-3.2.0.0-and-jwt-related-changes-in-azure-ad-integration-sample/index.html"]
-header_pages:
-  - "about.md"
 plugins:
   - "jekyll-sitemap"
   - "jekyll-github-metadata"
   - "jekyll-redirect-from"
   - "jekyll-paginate"
-disqus:
-  shortname: "gtrifonov"
-twitter_username: geotrif
 github_username: gtrifonov
-linkedin_username: gtrifonov
 rss: rss
 google_analytics: UA-759938-1
 
